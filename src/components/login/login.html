@@ -1,0 +1,7 @@
+<template>
+    <form ref="form">
+        <input type="email" name="email" value.bind="email" id="email" placeholder="Email">
+        <input type="password" name="password" value.bind="password" id="password" placeholder="Password">
+        <button click.delegate="onSubmit($event)">Login</button>
+    </form>
+</template>

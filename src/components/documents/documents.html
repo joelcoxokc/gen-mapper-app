@@ -1,0 +1,26 @@
+<template>
+    <div class="document-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>
+                        <button click.delegate="createDocument()">Add</button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="doc of fileService.list">
+                    <td>
+                        <input type="text" value.bind="doc.title" placeholder="Doc Name" change.delegate="saveDoc(doc)">
+                    </td>
+                    <td>
+                        <button click.delegate="loadDoc(doc)">Load</button>
+                        <button click.delegate="removeDocument(doc)">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</template>

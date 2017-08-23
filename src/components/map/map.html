@@ -1,0 +1,9 @@
+<template>
+    <require from="./genmapper"></require>
+    <button click.delegate="save()">Save</button>
+
+    <compose view-model.bind="genmapper"></compose>
+    <!-- <genmapper genmapper.ref="genmapper"
+               template-format.bind="format" 
+               template-content.bind="model.content"></genmapper> -->
+</template>
