@@ -1,6 +1,10 @@
 <template>
-    <require from="./genmapper"></require>
-    <button click.delegate="save()">Save</button>
+
+    <header class="navbar">
+        <icon name="arrow-back"></icon>
+        <input type="text" value.bind="currentDocument.title" placeholder="Document Name">
+        <button click.delegate="save()">Save</button>
+    </header>
 
     <compose view-model.bind="genmapper"></compose>
     <!-- <genmapper genmapper.ref="genmapper"

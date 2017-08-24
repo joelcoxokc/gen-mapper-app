@@ -21,15 +21,9 @@ define('app',['exports', 'aurelia-router'], function (exports, _aureliaRouter) {
       var step = new AuthorizeStep();
       config.addAuthorizeStep(step);
       config.map([{
-        moduleId: 'components/mapvarients/mapvarients',
-        route: ['', 'genmapper', 'genmaplist'],
-        name: 'genmapper',
-        auth: true
-      }, {
-        moduleId: 'components/genmap/genmap',
-        route: ['genmapper/:type'],
-        name: 'genmap',
-        auth: true
+        moduleId: 'components/map/map',
+        route: ['', 'map', 'map/:id'],
+        name: 'map'
       }, {
         moduleId: 'components/login/login',
         route: 'login',
@@ -96,7 +90,7 @@ define('main',['exports', './environment'], function (exports, _environment) {
   }
 
   function configure(aurelia) {
-    aurelia.use.standardConfiguration();
+    aurelia.use.standardConfiguration().globalResources('components/icon/icon');
 
 
     if (_environment2.default.debug) {
@@ -111,23 +105,6 @@ define('main',['exports', './environment'], function (exports, _environment) {
       return aurelia.setRoot();
     });
   }
-});
-define('shared/entity',["exports"], function (exports) {
-    "use strict";
-
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
-
-    var Entity = exports.Entity = function Entity() {
-        _classCallCheck(this, Entity);
-    };
 });
 define('services/authservice',['exports', 'aurelia-framework', 'aurelia-http-client', 'services/http'], function (exports, _aureliaFramework, _aureliaHttpClient, _http) {
     'use strict';
@@ -397,6 +374,23 @@ define('services/http',['exports', 'aurelia-http-client', 'aurelia-framework', '
         return Http;
     }()) || _class);
 });
+define('shared/entity',["exports"], function (exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var Entity = exports.Entity = function Entity() {
+        _classCallCheck(this, Entity);
+    };
+});
 define('components/documents/documents',['exports', 'services/fileservice', 'aurelia-framework', 'aurelia-router', 'services/http'], function (exports, _fileservice, _aureliaFramework, _aureliaRouter, _http) {
     'use strict';
 
@@ -476,6 +470,29 @@ define('components/documents/documents',['exports', 'services/fileservice', 'aur
         return DocumentsViewModel;
     }()) || _class2);
 });
+define('components/import/import',["exports"], function (exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var ImportViewModel = exports.ImportViewModel = function () {
+        function ImportViewModel() {
+            _classCallCheck(this, ImportViewModel);
+        }
+
+        ImportViewModel.prototype.onSubmit = function onSubmit() {};
+
+        return ImportViewModel;
+    }();
+});
 define('components/genmap/genmap',['exports'], function (exports) {
     'use strict';
 
@@ -522,29 +539,6 @@ define('components/genmap/genmap',['exports'], function (exports) {
         };
 
         return GenMapViewModel;
-    }();
-});
-define('components/import/import',["exports"], function (exports) {
-    "use strict";
-
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
-
-    var ImportViewModel = exports.ImportViewModel = function () {
-        function ImportViewModel() {
-            _classCallCheck(this, ImportViewModel);
-        }
-
-        ImportViewModel.prototype.onSubmit = function onSubmit() {};
-
-        return ImportViewModel;
     }();
 });
 define('components/login/login',['exports', 'services/authservice', 'aurelia-router', 'aurelia-framework'], function (exports, _authservice, _aureliaRouter, _aureliaFramework) {
@@ -666,7 +660,7 @@ define('components/map/genmapper',['exports', './templates', 'aurelia-framework'
 
             _initDefineProp(this, 'templateContent', _descriptor2, this);
 
-            this.format = options.format;
+            this.format = options.format || 'church-circles';
             this.model = options.model;
 
             if (this.format) {
@@ -1890,15 +1884,96 @@ define('components/mapvarients/mapvarients',["exports"], function (exports) {
 define('components/signup/signup',[], function () {
   "use strict";
 });
-define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"./style.css\"></require><header></header><router-view class=\"${router.currentInstruction.config.name}\"></router-view></template>"; });
-define('text!style.css', ['module'], function(module) { module.exports = "/* Genmapper CSS */\n\n/**** Basic elements ****/\n\nhtml {\n  position: relative;\n  width: 100%;\n  height: 100%;\n}\nbody{\n  font: 15px sans-serif;\n  position: relative;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n}\n\nbutton, .btn {\n    cursor: pointer;\n    background-color: white;\n    height: 36px;\n    min-width: 120px;\n    border: 1px solid #eee;\n    color: #333;\n    padding: 0 16px;\n    line-height: 36px;\n    text-align: center;\n    text-decoration: none;\n    display: inline-block;\n    font-size: 14px;\n    margin: 0 16px 16px 0;\n    border-radius: 2px;\n    box-shadow: 0px 2px 2px rgba(0,0,0,0.2);\n}\n\nbutton:hover, .btn:hover {\n  box-shadow: 0px 4px 4px rgba(0,0,0,0.2);\n}\n\nbutton:active, .btn:active {\n  box-shadow: 0px 1px 1px rgba(0,0,0,0.2);\n}\n\n\nrect{\n  fill:white;\n}\n\nsvg{\n  background: whitesmoke;\n}\n\nh2{\n  font-size:18px;\n}\n\nh2:hover{\n  color:#aaa;\n}\n\nh3{\n  font-size:16px;\n  margin:0;\n  padding:0;\n  border: 0;\n}\n\np {\n  margin-top:0.3eM;\n}\n\n/**** Left menu ****/\nmain > aside {\n  width:200px;\n  float:left;\n}\n\nmain > aside button{\n  width:200px;\n  border: 3px solid #ddd;\n  padding: 10px 10px;\n}\n\nmain > aside button:hover{\n  background-color: lightskyblue;\n}\n\nmain > aside p{\n  width:200px;\n  color: steelblue;\n  margin: 5px;\n  margin-top: 15px;\n  border: 0px;\n  text-align: center;\n  text-decoration: none;\n  display: inline-block;\n  font-size: 18px;\n  font-weight: bold;\n}\n\n/**** Modal windows ****/\n#intro, #edit-group, #alert-message {\n  position: fixed;\n  z-index: 1;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: rgb(0,0,0);\n  background-color: rgba(0,0,0,0.7);\n}\n\n#intro {\n  display: none;\n}\n\n#edit-group {\n  display: none;\n}\n\n#alert-message {\n  display: none;\n  z-index: 2;\n}\n\n#intro-content, #edit-group-content, #alert-message-content {\n  border: double black 5px;\n  padding: 25px;\n  background: whitesmoke;\n  position: relative;\n  background-color: #fefefe;\n  margin: 30px auto;\n}\n\n#intro-content {\n  width: 80%;\n  max-width: 800px;\n}\n\n#edit-group-content {\n  max-width: 400px;\n}\n\n#alert-message-content {\n  max-width: 400px;\n}\n\n#edit-buttons {\n  height: 60px;\n  padding-top: 10px;\n}\n\n#edit-group-content h1{\n  margin: 2px;\n}\n\n#edit-group-content button{\n  width: 33%;\n  height: 50px;\n  border: 3px solid #ddd;\n  padding: 5px 5px;\n  float: left;\n}\n\n#edit-group-content input[type=text] {\n    font-size: 14px;\n    width: 100%;\n    padding: 2px 2px;\n    margin-left: 20px;\n    box-sizing: border-box;\n}\n\n#edit-group-content input[type=checkbox] {\n  margin-left: 25px;\n}\n\n#edit-group-content p {\n  font-size: 14px;\n  width: 100%;\n  padding: 5px 5px;\n  margin: 0;\n  margin-left: 20px;\n  color: #888;\n}\n\n#edit-submit{\n  background-color: steelblue;\n}\n\n#edit-cancel{\n  background-color: #aaa;\n}\n\n#edit-delete{\n  background-color: red;\n}\n\n#intro-content button{\n  background-color: #4CAF50; /* Green */\n  border: none;\n  color: white;\n  padding: 15px 32px;\n  font-size: 16px;\n}\n\n/**** SVG ****/\nmain > router-view {\n  float: right;\n  width: calc(100% - 201px);\n  height: 100%;\n}\n\n.addNode rect{\n  fill: #b3ffb3;\n}\n\n.addNode {\n  display: none;\n}\n\n.addNode:hover rect {\n  fill:lime;\n}\n\n.removeNode rect{\n  fill: lightsalmon;\n}\n\n.removeNode {\n  display: none;\n}\n\n.removeNode:hover rect {\n  fill:red;\n}\n\n.node text {\n  font: 15px sans-serif;\n  text-anchor: middle;\n}\n\n.node:hover > rect, .node:hover > line {\n  fill: lightskyblue;\n}\n\n.node:hover g.addNode, .node:hover g.removeNode {\n  display: block;\n}\n\n.node--active text, .link-text--active {\n  stroke: black;\n  fill: black;\n}\n\n.node--inactive text, .link-text--inactive {\n  stroke: #000;\n  fill: #000;\n  opacity: 0.4;\n}\n\n.node--inactive image {\n  opacity: 0.4;\n}\n\n.node--inactive > rect, .node--inactive > line {\n  stroke: #ddd;\n}\n\n.link {\n  fill: none;\n  stroke: #ccc;\n  stroke-width: 2px;\n}\n\n.link-text {\n  text-anchor: middle;\n}\n\n.invisible-rect {\n  fill-opacity:0;\n  stroke-opacity:0;\n}\n"; });
+define('components/icon/icon',['exports', 'aurelia-framework'], function (exports, _aureliaFramework) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.Icon = undefined;
+
+    function _initDefineProp(target, property, descriptor, context) {
+        if (!descriptor) return;
+        Object.defineProperty(target, property, {
+            enumerable: descriptor.enumerable,
+            configurable: descriptor.configurable,
+            writable: descriptor.writable,
+            value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+        });
+    }
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+        var desc = {};
+        Object['ke' + 'ys'](descriptor).forEach(function (key) {
+            desc[key] = descriptor[key];
+        });
+        desc.enumerable = !!desc.enumerable;
+        desc.configurable = !!desc.configurable;
+
+        if ('value' in desc || desc.initializer) {
+            desc.writable = true;
+        }
+
+        desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+            return decorator(target, property, desc) || desc;
+        }, desc);
+
+        if (context && desc.initializer !== void 0) {
+            desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+            desc.initializer = undefined;
+        }
+
+        if (desc.initializer === void 0) {
+            Object['define' + 'Property'](target, property, desc);
+            desc = null;
+        }
+
+        return desc;
+    }
+
+    function _initializerWarningHelper(descriptor, context) {
+        throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+    }
+
+    var _dec, _dec2, _class, _desc, _value, _class2, _descriptor;
+
+    var Icon = exports.Icon = (_dec = (0, _aureliaFramework.customElement)('icon'), _dec2 = (0, _aureliaFramework.inject)(Element), _dec(_class = _dec2(_class = (_class2 = function () {
+        function Icon(element) {
+            _classCallCheck(this, Icon);
+
+            _initDefineProp(this, 'name', _descriptor, this);
+
+            this.element = element;
+        }
+
+        Icon.prototype.nameChanged = function nameChanged(name) {
+            this.element.setAttribute('style', 'background-image: url(scripts/icons/' + name + '.svg)');
+        };
+
+        return Icon;
+    }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'name', [_aureliaFramework.bindable], {
+        enumerable: true,
+        initializer: function initializer() {
+            return null;
+        }
+    })), _class2)) || _class) || _class);
+});
+define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"./style.css\"></require><require from=\"./components/genmapper.css\"></require><header></header><router-view class=\"${router.currentInstruction.config.name}\"></router-view></template>"; });
+define('text!style.css', ['module'], function(module) { module.exports = "/* Genmapper CSS */\n\n/**** Basic elements ****/\n\nhtml {\n  position: relative;\n  width: 100%;\n  height: 100%;\n}\nbody{\n  font: 15px sans-serif;\n  position: relative;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n}\n\nicon {\n  height: 24px;\n  width: 24px;\n  display: inline-block;\n  margin: 12px;\n}\n\nbutton, .btn {\n    cursor: pointer;\n    background-color: white;\n    height: 36px;\n    min-width: 120px;\n    border: 1px solid #eee;\n    color: #333;\n    padding: 0 16px;\n    line-height: 36px;\n    text-align: center;\n    text-decoration: none;\n    display: inline-block;\n    font-size: 14px;\n    margin: 0 16px 16px 0;\n    border-radius: 2px;\n    box-shadow: 0px 2px 2px rgba(0,0,0,0.2);\n}\n\nbutton:hover, .btn:hover {\n  box-shadow: 0px 4px 4px rgba(0,0,0,0.2);\n}\n\nbutton:active, .btn:active {\n  box-shadow: 0px 1px 1px rgba(0,0,0,0.2);\n}\n\n\nrect{\n  fill:white;\n}\n\nsvg{\n  background: whitesmoke;\n}\n\nh2{\n  font-size:18px;\n}\n\nh2:hover{\n  color:#aaa;\n}\n\nh3{\n  font-size:16px;\n  margin:0;\n  padding:0;\n  border: 0;\n}\n\np {\n  margin-top:0.3eM;\n}\n\n/**** Left menu ****/\nmain > aside {\n  width:200px;\n  float:left;\n}\n\nmain > aside button{\n  width:200px;\n  border: 3px solid #ddd;\n  padding: 10px 10px;\n}\n\nmain > aside button:hover{\n  background-color: lightskyblue;\n}\n\nmain > aside p{\n  width:200px;\n  color: steelblue;\n  margin: 5px;\n  margin-top: 15px;\n  border: 0px;\n  text-align: center;\n  text-decoration: none;\n  display: inline-block;\n  font-size: 18px;\n  font-weight: bold;\n}\n\n/**** Modal windows ****/\n#intro, #edit-group, #alert-message {\n  position: fixed;\n  z-index: 1;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: rgb(0,0,0);\n  background-color: rgba(0,0,0,0.7);\n}\n\n#intro {\n  display: none;\n}\n\n#edit-group {\n  display: none;\n}\n\n#alert-message {\n  display: none;\n  z-index: 2;\n}\n\n#intro-content, #edit-group-content, #alert-message-content {\n  border: double black 5px;\n  padding: 25px;\n  background: whitesmoke;\n  position: relative;\n  background-color: #fefefe;\n  margin: 30px auto;\n}\n\n#intro-content {\n  width: 80%;\n  max-width: 800px;\n}\n\n#edit-group-content {\n  max-width: 400px;\n}\n\n#alert-message-content {\n  max-width: 400px;\n}\n\n#edit-buttons {\n  height: 60px;\n  padding-top: 10px;\n}\n\n#edit-group-content h1{\n  margin: 2px;\n}\n\n#edit-group-content button{\n  width: 33%;\n  height: 50px;\n  border: 3px solid #ddd;\n  padding: 5px 5px;\n  float: left;\n}\n\n#edit-group-content input[type=text] {\n    font-size: 14px;\n    width: 100%;\n    padding: 2px 2px;\n    margin-left: 20px;\n    box-sizing: border-box;\n}\n\n#edit-group-content input[type=checkbox] {\n  margin-left: 25px;\n}\n\n#edit-group-content p {\n  font-size: 14px;\n  width: 100%;\n  padding: 5px 5px;\n  margin: 0;\n  margin-left: 20px;\n  color: #888;\n}\n\n#edit-submit{\n  background-color: steelblue;\n}\n\n#edit-cancel{\n  background-color: #aaa;\n}\n\n#edit-delete{\n  background-color: red;\n}\n\n#intro-content button{\n  background-color: #4CAF50; /* Green */\n  border: none;\n  color: white;\n  padding: 15px 32px;\n  font-size: 16px;\n}\n\n/**** SVG ****/\nmain > router-view {\n  float: right;\n  width: calc(100% - 201px);\n  height: 100%;\n}\n\n.addNode rect{\n  fill: #b3ffb3;\n}\n\n.addNode {\n  display: none;\n}\n\n.addNode:hover rect {\n  fill:lime;\n}\n\n.removeNode rect{\n  fill: lightsalmon;\n}\n\n.removeNode {\n  display: none;\n}\n\n.removeNode:hover rect {\n  fill:red;\n}\n\n.node text {\n  font: 15px sans-serif;\n  text-anchor: middle;\n}\n\n.node:hover > rect, .node:hover > line {\n  fill: lightskyblue;\n}\n\n.node:hover g.addNode, .node:hover g.removeNode {\n  display: block;\n}\n\n.node--active text, .link-text--active {\n  stroke: black;\n  fill: black;\n}\n\n.node--inactive text, .link-text--inactive {\n  stroke: #000;\n  fill: #000;\n  opacity: 0.4;\n}\n\n.node--inactive image {\n  opacity: 0.4;\n}\n\n.node--inactive > rect, .node--inactive > line {\n  stroke: #ddd;\n}\n\n.link {\n  fill: none;\n  stroke: #ccc;\n  stroke-width: 2px;\n}\n\n.link-text {\n  text-anchor: middle;\n}\n\n.invisible-rect {\n  fill-opacity:0;\n  stroke-opacity:0;\n}\n"; });
 define('text!components/documents/documents.html', ['module'], function(module) { module.exports = "<template><div class=\"document-list\"><table><thead><tr><th>Name</th><th><button click.delegate=\"createDocument()\">Add</button></th></tr></thead><tbody><tr repeat.for=\"doc of fileService.list\"><td><input type=\"text\" value.bind=\"doc.title\" placeholder=\"Doc Name\" change.delegate=\"saveDoc(doc)\"></td><td><button click.delegate=\"loadDoc(doc)\">Load</button> <button click.delegate=\"removeDocument(doc)\">Remove</button></td></tr></tbody></table></div></template>"; });
-define('text!components/genmapper.css', ['module'], function(module) { module.exports = "\n\n.genmap {\n    display: flex;\n    height: 100%;\n}\n\n.genmap aside {\n    flex: 1;\n    max-width: 200px;\n    background:#eee;\n}\n\n.genmap main {\n    flex: 1;\n}\n\n.genmap aside h3 {\n    padding: 0 16px;\n    line-height: 48px;\n    text-overflow: ellipsis;\n    overflow: hidden;\n}\n\n.genmap aside .list {\n    list-style: none;    \n    padding: 0;\n    margin-top: 48px;\n    border-top: 1px solid rgba(0,0,0,0.2);\n}\n\n.genmap aside .list li {\n    border-bottom: 1px solid rgba(0,0,0,0.2);\n}\n\n.genmap aside .list a {\n    color: #333;\n    display: block;\n    line-height: 48px;\n    padding-left: 24px; \n    text-decoration: none;\n}\n\n.genmap aside .list a:hover {\n    opacity: 0.5;\n}\n\n.genmap aside .list a:active {\n    opacity: 1;\n}\n\n.genmap .document-list,\n.genmap .document-import {\n    padding: 40px 60px;\n}\n\n.genmap table {\n    width: 100%;\n    margin: 0 auto;\n    border-radius: 2px;\n    border: 1px solid rgba(0,0,0,0.2);\n    border-collapse: collapse;\n}\n\n.genmap table tr {\n    border-bottom: 1px solid rgba(0,0,0,0.1);\n}\n\n.genmap table th {\n    text-align: left;\n    padding: 16px;\n    border-bottom: 1px solid rgba(0,0,0,0.1);\n}\n\n.genmap table td {\n    height: 48px;\n    padding-left: 16px;\n}\n\n.genmap table td:last-child {\n    width: 128px;\n}\n\n.genmap table button {\n    padding: 0 6px;\n    min-width: auto;\n    box-shadow: none;\n    margin: 0;\n}\n\n.genmap table input {\n    padding: 8px;\n    outline: none;\n    font-size: 16px;\n    background-color: white;\n    border: none;\n}\n\n.genmap table input:focus {\n    background-color: #eee;\n}\n\n.genmap table tr:hover td button:first-child {\n    background-color: lightskyblue;\n}\n.genmap table tr td button:last-child:hover {\n    background-color: red;\n}\n\n\n\n\n.node-church-box {\nstroke: black;\nstroke-width: 2;\n}\n\n.is-church {\nstroke-dasharray: 0;\n}\n\n.is-not-church {\nstroke-dasharray: 7,7;\n}\n\n.church-legacy {\nstroke-width: 4;\nstroke: green;\n}\n  "; });
+define('text!components/genmapper.css', ['module'], function(module) { module.exports = "\n.navbar {\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    min-height: 56px;\n    background-color: rgba(0,0,0,0.2);\n}\n\n.navbar input {\n    float: left;\n    margin: 8px;\n    line-height: 36px;\n    padding: 0 16px;\n    border: none;\n    min-width: 400px;\n    font-size: 18px;\n}\n\n.navbar icon {\n    float: left;\n    margin: 14px 24px;\n    cursor: pointer;\n}\n\n.navbar button {\n    float: right;\n    margin: 8px;\n}\n\n.genmap {\n    display: flex;\n    height: 100%;\n}\n\n.genmap aside {\n    flex: 1;\n    max-width: 200px;\n    background:#eee;\n}\n\n.genmap main {\n    flex: 1;\n}\n\n.genmap aside h3 {\n    padding: 0 16px;\n    line-height: 48px;\n    text-overflow: ellipsis;\n    overflow: hidden;\n}\n\n.genmap aside .list {\n    list-style: none;    \n    padding: 0;\n    margin-top: 48px;\n    border-top: 1px solid rgba(0,0,0,0.2);\n}\n\n.genmap aside .list li {\n    border-bottom: 1px solid rgba(0,0,0,0.2);\n}\n\n.genmap aside .list a {\n    color: #333;\n    display: block;\n    line-height: 48px;\n    padding-left: 24px; \n    text-decoration: none;\n}\n\n.genmap aside .list a:hover {\n    opacity: 0.5;\n}\n\n.genmap aside .list a:active {\n    opacity: 1;\n}\n\n.genmap .document-list,\n.genmap .document-import {\n    padding: 40px 60px;\n}\n\n.genmap table {\n    width: 100%;\n    margin: 0 auto;\n    border-radius: 2px;\n    border: 1px solid rgba(0,0,0,0.2);\n    border-collapse: collapse;\n}\n\n.genmap table tr {\n    border-bottom: 1px solid rgba(0,0,0,0.1);\n}\n\n.genmap table th {\n    text-align: left;\n    padding: 16px;\n    border-bottom: 1px solid rgba(0,0,0,0.1);\n}\n\n.genmap table td {\n    height: 48px;\n    padding-left: 16px;\n}\n\n.genmap table td:last-child {\n    width: 128px;\n}\n\n.genmap table button {\n    padding: 0 6px;\n    min-width: auto;\n    box-shadow: none;\n    margin: 0;\n}\n\n.genmap table input {\n    padding: 8px;\n    outline: none;\n    font-size: 16px;\n    background-color: white;\n    border: none;\n}\n\n.genmap table input:focus {\n    background-color: #eee;\n}\n\n.genmap table tr:hover td button:first-child {\n    background-color: lightskyblue;\n}\n.genmap table tr td button:last-child:hover {\n    background-color: red;\n}\n\n\n\n\n.node-church-box {\nstroke: black;\nstroke-width: 2;\n}\n\n.is-church {\nstroke-dasharray: 0;\n}\n\n.is-not-church {\nstroke-dasharray: 7,7;\n}\n\n.church-legacy {\nstroke-width: 4;\nstroke: green;\n}\n  "; });
+define('text!components/genmap/genmap.html', ['module'], function(module) { module.exports = "<template><require from=\"components/genmapper.css\"></require><aside><h3>${mapType}</h3><ul class=\"list\"><li><a href=\"#/genmapper/${mapType}/map\">Map</a></li><li><a href=\"#/genmapper/${mapType}/documents\">Documents</a></li><li><a href=\"#/genmapper/${mapType}/import\">Import</a></li><li><a href=\"\">Export</a></li></ul></aside><main style=\"transform:translateX(200px)\"><router-view containerless></router-view></main></template>"; });
 define('text!components/import/import.html', ['module'], function(module) { module.exports = "<template><div class=\"document-import\"><form><label for=\"file\">Import File</label><input type=\"file\" id=\"file\" value=\"Import File\"></form></div></template>"; });
-define('text!components/genmap/genmap.html', ['module'], function(module) { module.exports = "<template><require from=\"components/genmapper.css\"></require><aside><h3>${mapType}</h3><ul class=\"list\"><li><a href=\"#/genmapper/${mapType}/map\">Map</a></li><li><a href=\"#/genmapper/${mapType}/documents\">Documents</a></li><li><a href=\"#/genmapper/${mapType}/import\">Import</a></li><li><a href=\"\">Export</a></li></ul></aside><main><router-view containerless></router-view></main></template>"; });
 define('text!components/login/login.html', ['module'], function(module) { module.exports = "<template><form ref=\"form\"><input type=\"email\" name=\"email\" value.bind=\"email\" id=\"email\" placeholder=\"Email\"> <input type=\"password\" name=\"password\" value.bind=\"password\" id=\"password\" placeholder=\"Password\"> <button click.delegate=\"onSubmit($event)\">Login</button></form></template>"; });
 define('text!components/map/genmapper.html', ['module'], function(module) { module.exports = "<template><div id=\"content\"><aside style=\"display:none\" id=\"left-menu\"></aside><section id=\"intro\"><div id=\"intro-content\"><h2>GenMapper <span id=\"version\"></span> Help</h2><p>Hello, this app should serve for mapping generations of simple churches. I pray it serves you to advance Jesus' kingdom.</p><img src=\"scripts/assets/genmapper-node-example-church-circles.png\" style=\"float:right;margin:10px;margin-left:0\" alt=\"legend\"><h3>Legend</h3><p>Each circle represents a group / church. Dashed circle means group, full circle means church.<br>On the top the numbers describe: # total, # believers, # baptized<br>Inside the circle are the elements that are practiced in the group.<br>On the left there numbers 1 to 7 represent which elements of 3/3 process are practised:<br>1 - Personal care 2 - Worship 3 - Accountability 4 - Vision casting 5 - Bible study 6 - Practice 7 - Set goals and prayer</p><p>Click on the group to edit it.<br>Click on red button to remove group.<br>Click on green button to add child group.</p><h3>Import / Export</h3><p>Note: If you don't export, all changes will be lost when refreshing or closing page.<br>You can import a .xlsx or .xls (MS Excel) or .csv (Comma separated values) files.<br>You can also import a subtree by clicking a given group and then using the 'Import Subtree' button.<br>Export is currently available only to .csv format.<br><strong>Note:</strong> Some versions of Safari have problems with export to csv. If a new tab with blob is opened instead of file downloaded (see example below) <img src=\"scripts/assets/safari-export-issue-0.png\" style=\"margin:10px;margin-left:0\" alt=\"safari export issue\"><br>press Cmd + S, then enter a filename ending .csv, select Format: Page Source, and finally click Save. <img src=\"scripts/assets/safari-export-issue-1.png\" style=\"margin:10px;margin-left:0\" alt=\"safari export issue\"><br>For Export to PDF, use the Print buttons and then save as PDF in Chrome or Safari.</p><h3>Panning / Zooming</h3><p>You can pan by draging the map and zoom by mouse wheel or using buttons on the left.</p><h3>Changelog</h3><p>See <a href=\"https://github.com/dvopalecky/gen-mapper/blob/master/changelog.md\">here</a></p><h3>Credits</h3><p>Thanks to Curtis Sergeant for the idea of generational mapping and for providing useful feedback.<br>JavaScript libraries used: <a href=\"https://d3js.org\">d3.js</a>, <a href=\"https://github.com/eligrey/FileSaver.js/\">FileSaver.js</a>, <a href=\"https://github.com/SheetJS/js-xlsx\">js-xlsx</a> and <a href=\"http://underscorejs.org/\">Underscore.js</a><br><br>Copyright (c) 2016 - 2017 Daniel Vopalecky<br>Licensed with MIT Licence<br><a href=\"https://github.com/dvopalecky/gen-mapper\">Github repository</a><br>Please send suggestions and bugs to daniel.vopalecky@seznam.cz</p><button onclick=\"introSwitchVisibility()\">OK, let's start!</button></div></section><section id=\"alert-message\"></section><section id=\"edit-group\"></section><section id=\"main\"><svg id=\"main-svg\" width=\"100%\"></svg></section></div></template>"; });
-define('text!components/map/map.html', ['module'], function(module) { module.exports = "<template><require from=\"./genmapper\"></require><button click.delegate=\"save()\">Save</button><compose view-model.bind=\"genmapper\"></compose></template>"; });
+define('text!components/map/map.html', ['module'], function(module) { module.exports = "<template><header class=\"navbar\"><icon name=\"arrow-back\"></icon><input type=\"text\" value.bind=\"currentDocument.title\" placeholder=\"Document Name\"> <button click.delegate=\"save()\">Save</button></header><compose view-model.bind=\"genmapper\"></compose></template>"; });
 define('text!components/mapvarients/mapvarients.html', ['module'], function(module) { module.exports = "<template><require from=\"../genmapper.css\"></require><div style=\"text-align:center\"><h1>GenMapper</h1><p>Hello, this app should serve for mapping generations of simple churches.<br>I pray it serves you to advance Jesus' kingdom.</p><p>Please select gen map variant:</p><section style=\"max-width:900px;margin:0 auto;display:flex\"><div style=\"margin:20px;flex-grow:1;flex-shrink:1;padding:10px\"><a class=\"btn\" href=\"#/genmapper/four-fields\">Four Fields </a><img src=\"scripts/assets/gen-mapper-example1.png\" height=\"400\" alt=\"four-fields\"></div><div style=\"margin:20px;flex-grow:1;flex-shrink:1;padding:10px\"><a class=\"btn\" href=\"#/genmapper/church-circles\">Church Circles </a><img src=\"scripts/assets/gen-mapper-example-church-circles.png\" height=\"400\" alt=\"church-circles\"></div></section><h3>Other</h3><p><a href=\"church-circles-czech/index.html\">Church circles Czech</a></p><p><a href=\"movementeer/index.html\">MOVEMENTeer</a></p></div></template>"; });
 define('text!components/signup/signup.html', ['module'], function(module) { module.exports = ""; });
+define('text!components/icon/icon.html', ['module'], function(module) { module.exports = "<template></template>"; });
 //# sourceMappingURL=app-bundle.js.map

@@ -22,7 +22,7 @@ export class GenMapper {
 
 
     constructor(options) {
-        this.format = options.format;
+        this.format = options.format || 'church-circles';
         this.model = options.model;
 
         if (this.format) {

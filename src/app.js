@@ -9,16 +9,9 @@ export class App {
     config.addAuthorizeStep(step)
     config.map([
       {
-        moduleId: 'components/mapvarients/mapvarients',
-        route: ['', 'genmapper', 'genmaplist'],
-        name: 'genmapper',
-        auth: true
-      },
-      {
-        moduleId: 'components/genmap/genmap',
-        route: ['genmapper/:type'],
-        name: 'genmap',
-        auth: true
+        moduleId: 'components/map/map',
+        route: ['', 'map', 'map/:id'],
+        name: 'map',
       },
       {
         moduleId: 'components/login/login',

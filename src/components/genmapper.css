@@ -1,4 +1,33 @@
 
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    min-height: 56px;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.navbar input {
+    float: left;
+    margin: 8px;
+    line-height: 36px;
+    padding: 0 16px;
+    border: none;
+    min-width: 400px;
+    font-size: 18px;
+}
+
+.navbar icon {
+    float: left;
+    margin: 14px 24px;
+    cursor: pointer;
+}
+
+.navbar button {
+    float: right;
+    margin: 8px;
+}
 
 .genmap {
     display: flex;
