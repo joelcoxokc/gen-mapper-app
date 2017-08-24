@@ -1,0 +1,129 @@
+
+.editor {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  flex-flow: column;
+}
+
+.border-right-smoke {
+  border-right: 1px solid #D3DCE6;
+}
+
+.border-bottom-smoke {
+  border-bottom: 1px solid #D3DCE6;
+}
+
+.border-bottom-snow {
+  border-bottom: 1px solid #EFF2F7;
+}
+
+.editor .left {
+  flex: 0 0 20rem;
+}
+
+.editor .right {
+  flex: 1;
+}
+
+.editor > .nav {
+  flex: 0 0 4rem;
+
+  display: flex;
+}
+
+.editor > .nav > .right {
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.editor > .nav .title {
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  border: 1px dashed #E5E9F2;
+}
+
+.editor .nav .button {
+  background: #13CE66;
+  padding: 0.8em 1.5rem;
+  border-radius: 4px 0 0 4px;
+  color: white;
+  cursor: pointer;
+  box-shadow: inset 0 -2px 0 rgba(31,45,61,.15);
+}
+
+.editor .nav .dropdown {
+  margin-left: 0.2rem;
+  box-shadow: inset 0 -2px 0 rgba(31,45,61,.15);
+  background: #13CE66;
+  display: flex;
+  align-items: center;
+  padding: 0 0.3rem;
+  border-radius: 0 4px 4px 0;
+  color: white;
+  cursor: pointer;
+}
+
+.editor .nav .dropdown icon {
+  margin: 0;
+}
+
+.editor > .main {
+  flex: 1;
+
+  display: flex;
+}
+
+.editor > .main > .sidebar {
+  background: #F9FAFC;
+}
+
+.editor > .main > .content {
+
+}
+
+.editor .document {
+  background: white;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.editor .document .meta {
+  justify-content: center;
+}
+
+.editor .document .title {
+  font-size: 1.1rem;
+  color: #444;
+}
+
+.editor .document .format {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: #777;
+}
+
+.editor .document .actions {
+  transition: opacity 100ms ease;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+}
+
+.editor .document.active .title {
+  color: #1FB6FF;
+}
+
+.editor .document:hover .actions {
+  opacity: 1;
+}
+
+.editor .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Interface, sans-serif;
+  font-size: 1.4rem;
+  color: #FF5216;
+  font-weight: 600;
+}

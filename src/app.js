@@ -22,10 +22,14 @@ export class App {
         moduleId: 'components/signup/signup',
         route: 'signup',
         name: 'signup'
+      },
+      {
+        moduleId: 'components/editor/editor',
+        route: 'editor',
+        name: 'editor'
       }
-    ])
+    ]);
     this.router = router;
-    console.log(this.router)
   }
 }
 
