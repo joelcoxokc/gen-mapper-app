@@ -28,8 +28,8 @@
   "cssProcessor": {
     "id": "none",
     "displayName": "None",
-    "fileExtension": ".css",
-    "source": "src/**/*.css"
+    "fileExtension": ".scss",
+    "source": "src/app.scss"
   },
   "editor": {
     "id": "vscode",
