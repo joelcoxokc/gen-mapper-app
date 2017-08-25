@@ -8,27 +8,38 @@
     </div>
     <div class="right row">
       <div class="meta f1">
-        <span class="title"> My Other Document </span>
+        <input class="title" placeholder="Document Name" value.bind="currentDoc.title">
       </div>
       <div class="actions row">
-        <div class="button">Save</div>
+        <button if.bind="loadedDoc" disabled.bind="!isDirty" click.trigger="save()" class="button">Save</button>
+        <button if.bind="!loadedDoc" disabled.bind="!canCreate" click.trigger="create()" class="button">Create</button>
         <div class="dropdown"><icon name="down"></icon></div>
       </div>
     </div>
   </div>
   <div class="main">
-    <div class="left sidebar border-right-smoke">
-      <div class="document row border-bottom-snow ${doc.active ? 'active' : ''}" repeat.for="doc of docs">
-        <div class="meta f1 col">
-          <div class="title">${doc.title}</div>
-          <div class="format">${doc.format}</div>
-        </div>
-        <div class="actions">
-          <icon class="delete" name="delete"></icon>
+    <div class="left sidebar col border-right-smoke">
+      <div class="actions row">
+        <div click.trigger="importFile()" class="import border-right-snow f1"> <icon name="paperclip"></icon> </div>
+        <div click.trigger="startNew()" class="create f1"> <icon name="add"></icon> </div>
+      </div>
+      <div if.bind="empty" class="f1 emptyPlaceholder">
+        <div class="message"> You don't have any documents! Try importing or creating one using the buttons above </div>
+      </div>
+      <div if.bind="!empty" class="f1 documents">
+        <div class="document row border-bottom-snow ${currentDoc.id === doc.id ? 'active' : ''}" repeat.for="doc of docs" click.trigger="setDoc(doc.id)">
+          <div class="meta f1 col">
+            <div class="title">${doc.title}</div>
+            <div class="format">${doc.format}</div>
+          </div>
+          <div class="actions">
+            <icon click.trigger="delete(doc.id, $event)" class="delete" name="delete"></icon>
+          </div>
         </div>
       </div>
     </div>
     <div class="right content">
+      <textarea value.bind="currentDoc.content" rows="20" cols="80"></textarea>
     </div>
   </div>
 </template>
