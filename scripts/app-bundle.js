@@ -109,6 +109,52 @@ define('main',['exports', './environment'], function (exports, _environment) {
     });
   }
 });
+define('services/Documents',['exports', 'aurelia-framework', 'services/http'], function (exports, _aureliaFramework, _http) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Documents = undefined;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _dec, _class;
+
+  var Documents = exports.Documents = (_dec = (0, _aureliaFramework.inject)(_http.Http), _dec(_class = function () {
+    function Documents(http) {
+      _classCallCheck(this, Documents);
+
+      this.http = http;
+    }
+
+    Documents.prototype.getAll = function getAll() {
+      return this.http.get('/documents');
+    };
+
+    Documents.prototype.create = function create(body) {
+      return this.http.post('/documents', body);
+    };
+
+    Documents.prototype.get = function get(id) {
+      return this.http.get('/documents/' + id);
+    };
+
+    Documents.prototype.update = function update(id, body) {
+      return this.http.put('/documents/' + id, body);
+    };
+
+    Documents.prototype.delete = function _delete(id) {
+      return this.http.delete('/documents/' + id);
+    };
+
+    return Documents;
+  }()) || _class);
+});
 define('services/authservice',['exports', 'aurelia-framework', 'aurelia-http-client', 'services/http'], function (exports, _aureliaFramework, _aureliaHttpClient, _http) {
     'use strict';
 
@@ -305,77 +351,101 @@ define('services/fileservice',['exports', 'aurelia-event-aggregator', 'aurelia-f
     }
 });
 define('services/http',['exports', 'aurelia-http-client', 'aurelia-framework', 'shared/entity'], function (exports, _aureliaHttpClient, _aureliaFramework, _entity) {
-    'use strict';
+  'use strict';
 
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    exports.Http = undefined;
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Http = undefined;
 
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _dec, _class;
+
+  function handleError(err) {
+    console.log(err.message);
+  }
+
+  var Http = exports.Http = (_dec = (0, _aureliaFramework.inject)(_aureliaHttpClient.HttpClient), _dec(_class = function () {
+    function Http(http) {
+      _classCallCheck(this, Http);
+
+      this.http = http;
+      this.configure();
     }
 
-    var _dec, _class;
+    Http.prototype.configure = function configure() {
+      this.http.configure(function (x) {
+        x.withBaseUrl('http://genmap.garrettcox.io');
+        x.withHeader('Authorization', 'bearer ' + sessionStorage.getItem('auth_token'));
+      });
+    };
 
-    function handleError(err) {
-        console.log(err);
-    }
+    Http.prototype.get = function get(url) {
+      return this.http.get(url).then(function (response) {
+        return response.content.data;
+      }).catch(handleError);
+    };
 
-    var Http = exports.Http = (_dec = (0, _aureliaFramework.inject)(_aureliaHttpClient.HttpClient), _dec(_class = function () {
-        function Http(http) {
-            _classCallCheck(this, Http);
+    Http.prototype.post = function post(url, body) {
+      return this.http.post(url, body).then(function (response) {
+        return response.content.data;
+      }).catch(handleError);
+    };
 
-            this.http = http;
-            this.configure();
-        }
+    Http.prototype.put = function put(url, body) {
+      return this.http.put(url, body).then(function (response) {
+        return response.content.data;
+      }).catch(handleError);
+    };
 
-        Http.prototype.configure = function configure() {
-            this.http.configure(function (x) {
-                x.withBaseUrl('http://genmap.garrettcox.io');
-                x.withHeader('Authorization', 'bearer ' + sessionStorage.getItem('auth_token'));
-            });
-        };
+    Http.prototype.delete = function _delete(url) {
+      return this.http.delete(url).then(function (response) {
+        return response.content.data;
+      }).catch(handleError);
+    };
 
-        Http.prototype.getAll = function getAll(url) {
-            return this.http.get(url).then(function (d) {
-                return d.content;
-            }).catch(handleError);
-        };
+    Http.prototype.getAll = function getAll(url) {
+      return this.http.get(url).then(function (d) {
+        return d.content;
+      }).catch(handleError);
+    };
 
-        Http.prototype.getDocuments = function getDocuments(format) {
-            return this.getAll('documents').then(function (d) {
-                return d.data.map(function (item) {
-                    item.entityType = 'documents';
-                    return item;
-                });
-            });
-        };
+    Http.prototype.getDocuments = function getDocuments(format) {
+      return this.getAll('documents').then(function (d) {
+        return d.data.map(function (item) {
+          item.entityType = 'documents';
+          return item;
+        });
+      });
+    };
 
-        Http.prototype.create = function create() {
-            var entity = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    Http.prototype.create = function create() {
+      var entity = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-            return this.http.post(entity.entityType, entity).catch(handleError);
-        };
+      return this.http.post(entity.entityType, entity).catch(handleError);
+    };
 
-        Http.prototype.update = function update() {
-            var entity = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    Http.prototype.update = function update() {
+      var entity = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-            var url = entity.entityType + '/' + entity.id;
-            return this.http.put(url, entity).catch(handleError);
-        };
+      var url = entity.entityType + '/' + entity.id;
+      return this.http.put(url, entity).catch(handleError);
+    };
 
-        Http.prototype.delete = function _delete() {
-            var entity = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    Http.prototype.deleteEntity = function deleteEntity() {
+      var entity = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-            var url = entity.entityType + '/' + entity.id;
-            return this.http.delete(url).catch(handleError);
-        };
+      var url = entity.entityType + '/' + entity.id;
+      return this.http.delete(url).catch(handleError);
+    };
 
-        return Http;
-    }()) || _class);
+    return Http;
+  }()) || _class);
 });
 define('shared/entity',["exports"], function (exports) {
     "use strict";
@@ -473,12 +543,41 @@ define('components/documents/documents',['exports', 'services/fileservice', 'aur
         return DocumentsViewModel;
     }()) || _class2);
 });
-define('components/editor/editor',['exports'], function (exports) {
+define('components/editor/editor',['exports', 'aurelia-framework', 'services/Documents'], function (exports, _aureliaFramework, _Documents) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  exports.Editor = undefined;
+
+  var _createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  }();
+
+  function _initDefineProp(target, property, descriptor, context) {
+    if (!descriptor) return;
+    Object.defineProperty(target, property, {
+      enumerable: descriptor.enumerable,
+      configurable: descriptor.configurable,
+      writable: descriptor.writable,
+      value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+    });
+  }
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -486,21 +585,170 @@ define('components/editor/editor',['exports'], function (exports) {
     }
   }
 
-  var Editor = exports.Editor = function Editor() {
-    _classCallCheck(this, Editor);
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+    var desc = {};
+    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+      desc[key] = descriptor[key];
+    });
+    desc.enumerable = !!desc.enumerable;
+    desc.configurable = !!desc.configurable;
 
-    this.docs = [{
-      title: 'My Cool Document',
-      format: 'Church Circles'
+    if ('value' in desc || desc.initializer) {
+      desc.writable = true;
+    }
+
+    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+      return decorator(target, property, desc) || desc;
+    }, desc);
+
+    if (context && desc.initializer !== void 0) {
+      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+      desc.initializer = undefined;
+    }
+
+    if (desc.initializer === void 0) {
+      Object['define' + 'Property'](target, property, desc);
+      desc = null;
+    }
+
+    return desc;
+  }
+
+  function _initializerWarningHelper(descriptor, context) {
+    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+  }
+
+  var _desc, _value, _class, _descriptor, _descriptor2, _dec, _class3;
+
+  var Document = (_class = function () {
+    function Document(props) {
+      _classCallCheck(this, Document);
+
+      _initDefineProp(this, 'title', _descriptor, this);
+
+      _initDefineProp(this, 'content', _descriptor2, this);
+
+      Object.assign(this, props);
+      this.dirty = false;
+    }
+
+    Document.prototype.titleChanged = function titleChanged() {
+      this.dirty = true;
+    };
+
+    Document.prototype.contentChanged = function contentChanged() {
+      this.dirty = true;
+    };
+
+    return Document;
+  }(), (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'title', [_aureliaFramework.observable], {
+    enumerable: true,
+    initializer: null
+  }), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'content', [_aureliaFramework.observable], {
+    enumerable: true,
+    initializer: null
+  })), _class);
+  var Editor = exports.Editor = (_dec = (0, _aureliaFramework.inject)(_Documents.Documents), _dec(_class3 = function () {
+    function Editor(documents) {
+      _classCallCheck(this, Editor);
+
+      this.docService = documents;
+      this.docs = [];
+      this.currentDoc = {};
+      this.loadedDoc = false;
+
+      this.refreshDocs();
+    }
+
+    Editor.prototype.refreshDocs = function refreshDocs() {
+      var _this = this;
+
+      return this.docService.getAll().then(function (docs) {
+        _this.docs = docs.map(function (d) {
+          return new Document(d);
+        });
+      });
+    };
+
+    Editor.prototype.setDoc = function setDoc(id) {
+      var _this2 = this;
+
+      this.refreshDocs().then(function () {
+        var index = _this2.docs.reduce(function (d, c, i) {
+          if (d === -1 && c.id === id) return i;
+          return d;
+        }, -1);
+
+        if (index === -1) throw new Error('Invalid doc id');
+
+        _this2.currentDoc = _this2.docs[index];
+        _this2.loadedDoc = true;
+      });
+    };
+
+    Editor.prototype.startNew = function startNew() {
+      this.loadedDoc = false;
+      this.currentDoc = {};
+    };
+
+    Editor.prototype.importFile = function importFile() {};
+
+    Editor.prototype.save = function save() {
+      var _this3 = this;
+
+      console.log(this.currentDoc);
+      this.docService.update(this.currentDoc.id, this.currentDoc).then(function (updated) {
+        return _this3.refreshDocs().then(function () {
+          return _this3.setDoc(updated.id);
+        });
+      });
+    };
+
+    Editor.prototype.create = function create() {
+      var _this4 = this;
+
+      this.currentDoc.format = 'churchCircles';
+      this.docService.create(this.currentDoc).then(function (created) {
+        return _this4.refreshDocs().then(function () {
+          return _this4.setDoc(created.id);
+        });
+      });
+    };
+
+    Editor.prototype.delete = function _delete(id, $event) {
+      var _this5 = this;
+
+      var currentId = this.currentDoc.id;
+      $event.stopPropagation();
+
+      this.docService.delete(id).then(function () {
+        return _this5.refreshDocs();
+      }).then(function () {
+        return function () {
+          if (currentId === id) _this5.startNew();else return _this5.setDoc(currentId);
+        };
+      });
+    };
+
+    _createClass(Editor, [{
+      key: 'empty',
+      get: function get() {
+        return !this.docs.length;
+      }
     }, {
-      title: 'My Other Document',
-      format: 'Four Fields',
-      active: true
+      key: 'canCreate',
+      get: function get() {
+        return !!this.currentDoc.title;
+      }
     }, {
-      title: 'My Third Document',
-      format: 'Four Fields'
-    }];
-  };
+      key: 'isDirty',
+      get: function get() {
+        return this.currentDoc.dirty;
+      }
+    }]);
+
+    return Editor;
+  }()) || _class3);
 });
 define('components/genmap/genmap',['exports'], function (exports) {
     'use strict';
@@ -548,6 +796,29 @@ define('components/genmap/genmap',['exports'], function (exports) {
         };
 
         return GenMapViewModel;
+    }();
+});
+define('components/import/import',["exports"], function (exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var ImportViewModel = exports.ImportViewModel = function () {
+        function ImportViewModel() {
+            _classCallCheck(this, ImportViewModel);
+        }
+
+        ImportViewModel.prototype.onSubmit = function onSubmit() {};
+
+        return ImportViewModel;
     }();
 });
 define('components/icon/icon',['exports', 'aurelia-framework'], function (exports, _aureliaFramework) {
@@ -630,29 +901,6 @@ define('components/icon/icon',['exports', 'aurelia-framework'], function (export
         }
     })), _class2)) || _class) || _class);
 });
-define('components/import/import',["exports"], function (exports) {
-    "use strict";
-
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
-
-    var ImportViewModel = exports.ImportViewModel = function () {
-        function ImportViewModel() {
-            _classCallCheck(this, ImportViewModel);
-        }
-
-        ImportViewModel.prototype.onSubmit = function onSubmit() {};
-
-        return ImportViewModel;
-    }();
-});
 define('components/login/login',['exports', 'services/authservice', 'aurelia-router', 'aurelia-framework'], function (exports, _authservice, _aureliaRouter, _aureliaFramework) {
     'use strict';
 
@@ -700,6 +948,23 @@ define('components/login/login',['exports', 'services/authservice', 'aurelia-rou
 
         return Login;
     }()) || _class);
+});
+define('components/mapvarients/mapvarients',["exports"], function (exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var MapVarientsViewModel = exports.MapVarientsViewModel = function MapVarientsViewModel() {
+        _classCallCheck(this, MapVarientsViewModel);
+    };
 });
 define('components/map/genmapper',['exports', './templates', 'aurelia-framework'], function (exports, _templates, _aureliaFramework) {
     'use strict';
@@ -1976,30 +2241,13 @@ define('components/map/templates',['exports'], function (exports) {
   exports.textHeight = textHeight;
   exports.textMargin = textMargin;
 });
-define('components/mapvarients/mapvarients',["exports"], function (exports) {
-    "use strict";
-
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
-
-    var MapVarientsViewModel = exports.MapVarientsViewModel = function MapVarientsViewModel() {
-        _classCallCheck(this, MapVarientsViewModel);
-    };
-});
 define('components/signup/signup',[], function () {
   "use strict";
 });
 define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"./app.css\"></require><require from=\"./components/genmapper.css\"></require><header></header><router-view class=\"${router.currentInstruction.config.name}\"></router-view></template>"; });
 define('text!app.css', ['module'], function(module) { module.exports = ""; });
 define('text!components/documents/documents.html', ['module'], function(module) { module.exports = "<template><div class=\"document-list\"><table><thead><tr><th>Name</th><th><button click.delegate=\"createDocument()\">Add</button></th></tr></thead><tbody><tr repeat.for=\"doc of fileService.list\"><td><input type=\"text\" value.bind=\"doc.title\" placeholder=\"Doc Name\" change.delegate=\"saveDoc(doc)\"></td><td><button click.delegate=\"loadDoc(doc)\">Load</button> <button click.delegate=\"removeDocument(doc)\">Remove</button></td></tr></tbody></table></div></template>"; });
-define('text!components/editor/editor.html', ['module'], function(module) { module.exports = "<template><require from=\"./editor.css\"></require><div class=\"nav border-bottom-smoke\"><div class=\"left border-right-smoke col\"><div class=\"logo f1\">GenMapper</div></div><div class=\"right row\"><div class=\"meta f1\"><span class=\"title\">My Other Document</span></div><div class=\"actions row\"><div class=\"button\">Save</div><div class=\"dropdown\"><icon name=\"down\"></icon></div></div></div></div><div class=\"main\"><div class=\"left sidebar border-right-smoke\"><div class=\"document row border-bottom-snow ${doc.active ? 'active' : ''}\" repeat.for=\"doc of docs\"><div class=\"meta f1 col\"><div class=\"title\">${doc.title}</div><div class=\"format\">${doc.format}</div></div><div class=\"actions\"><icon class=\"delete\" name=\"delete\"></icon></div></div></div><div class=\"right content\"></div></div></template>"; });
+define('text!components/editor/editor.html', ['module'], function(module) { module.exports = "<template><require from=\"./editor.css\"></require><div class=\"nav border-bottom-smoke\"><div class=\"left border-right-smoke col\"><div class=\"logo f1\">GenMapper</div></div><div class=\"right row\"><div class=\"meta f1\"><input class=\"title\" placeholder=\"Document Name\" value.bind=\"currentDoc.title\"></div><div class=\"actions row\"><button if.bind=\"loadedDoc\" disabled.bind=\"!isDirty\" click.trigger=\"save()\" class=\"button\">Save</button> <button if.bind=\"!loadedDoc\" disabled.bind=\"!canCreate\" click.trigger=\"create()\" class=\"button\">Create</button><div class=\"dropdown\"><icon name=\"down\"></icon></div></div></div></div><div class=\"main\"><div class=\"left sidebar col border-right-smoke\"><div class=\"actions row\"><div click.trigger=\"importFile()\" class=\"import border-right-snow f1\"><icon name=\"paperclip\"></icon></div><div click.trigger=\"startNew()\" class=\"create f1\"><icon name=\"add\"></icon></div></div><div if.bind=\"empty\" class=\"f1 emptyPlaceholder\"><div class=\"message\">You don't have any documents! Try importing or creating one using the buttons above</div></div><div if.bind=\"!empty\" class=\"f1 documents\"><div class=\"document row border-bottom-snow ${currentDoc.id === doc.id ? 'active' : ''}\" repeat.for=\"doc of docs\" click.trigger=\"setDoc(doc.id)\"><div class=\"meta f1 col\"><div class=\"title\">${doc.title}</div><div class=\"format\">${doc.format}</div></div><div class=\"actions\"><icon click.trigger=\"delete(doc.id, $event)\" class=\"delete\" name=\"delete\"></icon></div></div></div></div><div class=\"right content\"><textarea value.bind=\"currentDoc.content\" rows=\"20\" cols=\"80\"></textarea></div></div></template>"; });
 define('text!components/genmap/genmap.html', ['module'], function(module) { module.exports = "<template><require from=\"components/genmapper.css\"></require><aside><h3>${mapType}</h3><ul class=\"list\"><li><a href=\"#/genmapper/${mapType}/map\">Map</a></li><li><a href=\"#/genmapper/${mapType}/documents\">Documents</a></li><li><a href=\"#/genmapper/${mapType}/import\">Import</a></li><li><a href=\"\">Export</a></li></ul></aside><main style=\"transform:translateX(200px)\"><router-view containerless></router-view></main></template>"; });
 define('text!components/icon/icon.html', ['module'], function(module) { module.exports = "<template></template>"; });
 define('text!components/import/import.html', ['module'], function(module) { module.exports = "<template><div class=\"document-import\"><form><label for=\"file\">Import File</label><input type=\"file\" id=\"file\" value=\"Import File\"></form></div></template>"; });
