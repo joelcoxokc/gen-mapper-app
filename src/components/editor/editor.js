@@ -45,7 +45,7 @@ export class Editor {
   refreshDocs() {
     return this.docService.getAll()
       .then(docs => {
-        this.docs = docs.map(d => new Document(d));
+        if (docs) this.docs = docs.map(d => new Document(d));
       });
   }
 
@@ -74,7 +74,6 @@ export class Editor {
   }
 
   save() {
-    console.log(this.currentDoc);
     this.docService.update(this.currentDoc.id, this.currentDoc)
       .then((updated) => {
         return this.refreshDocs()

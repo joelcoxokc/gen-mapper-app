@@ -1,0 +1,18 @@
+<template>
+  <div class="container contained row">
+    <div class="category" repeat.for="category of categories">
+      <div class="heading row">
+        <div class="name f1">${category.name}</div>
+        <a class="browse" href="#/">See All ▸</a>
+      </div>
+      <div class="tools row">
+        <div class="tool" repeat.for="tool of category.tools">
+          <div class="image" css="background-image: url('${tool.image}')"></div>
+          <div class="meta">
+            <div class="name">${tool.name}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

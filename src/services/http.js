@@ -3,7 +3,7 @@ import { inject } from 'aurelia-framework';
 import { Entity } from 'shared/entity';
 
 function handleError(err) {
-  console.log(err.message);
+  console.log(err.content.message);
 }
 
 @inject(HttpClient)
