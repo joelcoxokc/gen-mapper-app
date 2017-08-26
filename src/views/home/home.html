@@ -1,0 +1,18 @@
+<template>
+  <div class="home__categories">
+    <div class="home-category" repeat.for="category of categories">
+      <div class="home-category__header">
+        <div class="home-category__name">${category.name}</div>
+        <a class="home-category__browse" href="#/categories/${$index}">See All ▸</a>
+      </div>
+      <div class="home-category__tools">
+        <a class="home-tool" repeat.for="tool of category.tools" href="#/tools/${$index}">
+          <div class="home-tool__image" css="background-image: url('${tool.image}')"></div>
+          <div class="home-tool__meta">
+            <div class="home-tool__name">${tool.name}</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</template>

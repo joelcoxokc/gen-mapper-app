@@ -3,17 +3,17 @@ export class App {
   configureRouter(config, router) {
     config.map([
       {
-        moduleId: 'components/home/home',
+        moduleId: 'views/home/home',
         route: [''],
         name: 'home'
       },
       {
-        moduleId: 'components/category/category',
+        moduleId: 'views/category/category',
         route: 'categories/:id',
         name: 'category'
       },
       {
-        moduleId: 'components/tool/tool',
+        moduleId: 'views/tool/tool',
         route: 'tools/:id',
         name: 'tool'
       }

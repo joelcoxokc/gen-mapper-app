@@ -18,15 +18,15 @@ define('app',['exports'], function (exports) {
 
     App.prototype.configureRouter = function configureRouter(config, router) {
       config.map([{
-        moduleId: 'components/home/home',
+        moduleId: 'views/home/home',
         route: [''],
         name: 'home'
       }, {
-        moduleId: 'components/category/category',
+        moduleId: 'views/category/category',
         route: 'categories/:id',
         name: 'category'
       }, {
-        moduleId: 'components/tool/tool',
+        moduleId: 'views/tool/tool',
         route: 'tools/:id',
         name: 'tool'
       }]);
@@ -435,102 +435,6 @@ define('shared/entity',["exports"], function (exports) {
         _classCallCheck(this, Entity);
     };
 });
-define('components/category/category',["exports"], function (exports) {
-  "use strict";
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Category = exports.Category = function Category() {
-    _classCallCheck(this, Category);
-  };
-});
-define('components/documents/documents',['exports', 'services/fileservice', 'aurelia-framework', 'aurelia-router', 'services/http'], function (exports, _fileservice, _aureliaFramework, _aureliaRouter, _http) {
-    'use strict';
-
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    exports.DocumentsViewModel = undefined;
-
-    var _dec, _class2;
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
-
-    var formats_types = {
-        'church-circles': 'churchCircles',
-        'four-fields': 'fourFields'
-    };
-
-    var Document = function Document() {
-        var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-        _classCallCheck(this, Document);
-
-        this.entityType = 'documents';
-        this.title = 'New Document';
-        this.content = 'id,parentId,name,email,link,attenders,believers,baptized,newlyBaptized,church,churchType,elementBaptism,elementWord,elementPrayer,elementLordsSupper,elementGive,elementLove,elementWorship,elementLeaders,elementMakeDisciples,place,date,threeThirds,active\n    0,,Leader\'s Name,,,0,0,0,0,0,newBelievers,0,0,0,0,0,0,0,0,0,Place,Date,1234567,1';
-        Object.assign(this, obj);
-    };
-
-    var DocumentsViewModel = exports.DocumentsViewModel = (_dec = (0, _aureliaFramework.inject)(_aureliaRouter.Router, _http.Http, _fileservice.FileService), _dec(_class2 = function () {
-        function DocumentsViewModel(router, http, fileService) {
-            _classCallCheck(this, DocumentsViewModel);
-
-            this.router = router;
-            this.http = http;
-            this.fileService = fileService;
-        }
-
-        DocumentsViewModel.prototype.activate = function activate(params) {
-            this.formatId = params.type;
-            this.formatId = formats_types[this.formatId];
-            var d = new Document();
-            this.fileService.all();
-        };
-
-        DocumentsViewModel.prototype.saveDoc = function saveDoc(doc) {
-            this.fileService.update(doc);
-        };
-
-        DocumentsViewModel.prototype.loadDoc = function loadDoc(doc) {
-            this.fileService.select(doc);
-            this.router.navigate(doc.title);
-        };
-
-        DocumentsViewModel.prototype.createDocument = function createDocument() {
-            var _this = this;
-
-            var doc = new Document();
-            doc.format = this.formatId;
-
-            this.fileService.create(doc).then(function () {
-                return _this.fileService.all();
-            });
-        };
-
-        DocumentsViewModel.prototype.removeDocument = function removeDocument(doc) {
-            var _this2 = this;
-
-            this.fileService.delete(doc).then(function () {
-                return _this2.fileService.all();
-            });
-        };
-
-        return DocumentsViewModel;
-    }()) || _class2);
-});
 define('components/editor/editor',['exports', 'aurelia-framework', 'services/Documents'], function (exports, _aureliaFramework, _Documents) {
   'use strict';
 
@@ -737,6 +641,85 @@ define('components/editor/editor',['exports', 'aurelia-framework', 'services/Doc
     return Editor;
   }()) || _class3);
 });
+define('components/documents/documents',['exports', 'services/fileservice', 'aurelia-framework', 'aurelia-router', 'services/http'], function (exports, _fileservice, _aureliaFramework, _aureliaRouter, _http) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.DocumentsViewModel = undefined;
+
+    var _dec, _class2;
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var formats_types = {
+        'church-circles': 'churchCircles',
+        'four-fields': 'fourFields'
+    };
+
+    var Document = function Document() {
+        var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+        _classCallCheck(this, Document);
+
+        this.entityType = 'documents';
+        this.title = 'New Document';
+        this.content = 'id,parentId,name,email,link,attenders,believers,baptized,newlyBaptized,church,churchType,elementBaptism,elementWord,elementPrayer,elementLordsSupper,elementGive,elementLove,elementWorship,elementLeaders,elementMakeDisciples,place,date,threeThirds,active\n    0,,Leader\'s Name,,,0,0,0,0,0,newBelievers,0,0,0,0,0,0,0,0,0,Place,Date,1234567,1';
+        Object.assign(this, obj);
+    };
+
+    var DocumentsViewModel = exports.DocumentsViewModel = (_dec = (0, _aureliaFramework.inject)(_aureliaRouter.Router, _http.Http, _fileservice.FileService), _dec(_class2 = function () {
+        function DocumentsViewModel(router, http, fileService) {
+            _classCallCheck(this, DocumentsViewModel);
+
+            this.router = router;
+            this.http = http;
+            this.fileService = fileService;
+        }
+
+        DocumentsViewModel.prototype.activate = function activate(params) {
+            this.formatId = params.type;
+            this.formatId = formats_types[this.formatId];
+            var d = new Document();
+            this.fileService.all();
+        };
+
+        DocumentsViewModel.prototype.saveDoc = function saveDoc(doc) {
+            this.fileService.update(doc);
+        };
+
+        DocumentsViewModel.prototype.loadDoc = function loadDoc(doc) {
+            this.fileService.select(doc);
+            this.router.navigate(doc.title);
+        };
+
+        DocumentsViewModel.prototype.createDocument = function createDocument() {
+            var _this = this;
+
+            var doc = new Document();
+            doc.format = this.formatId;
+
+            this.fileService.create(doc).then(function () {
+                return _this.fileService.all();
+            });
+        };
+
+        DocumentsViewModel.prototype.removeDocument = function removeDocument(doc) {
+            var _this2 = this;
+
+            this.fileService.delete(doc).then(function () {
+                return _this2.fileService.all();
+            });
+        };
+
+        return DocumentsViewModel;
+    }()) || _class2);
+});
 define('components/genmap/genmap',['exports'], function (exports) {
     'use strict';
 
@@ -784,73 +767,6 @@ define('components/genmap/genmap',['exports'], function (exports) {
 
         return GenMapViewModel;
     }();
-});
-define('components/home/home',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Home = exports.Home = function Home() {
-    _classCallCheck(this, Home);
-
-    this.categories = [{
-      name: 'Entry',
-      tools: [{
-        name: 'Four Fields GenMap',
-        image: 'assets/fourFields-genmap.png'
-      }, {
-        name: 'Church Circles GenMap',
-        image: 'assets/churchCircles-genmap.png'
-      }, {
-        name: 'Four Fields GenMap',
-        image: 'assets/fourFields-genmap.png'
-      }]
-    }, {
-      name: 'Gospel',
-      tools: [{
-        name: 'Four Fields GenMap',
-        image: 'assets/fourFields-genmap.png'
-      }, {
-        name: 'Church Circles GenMap',
-        image: 'assets/churchCircles-genmap.png'
-      }, {
-        name: 'Four Fields GenMap',
-        image: 'assets/fourFields-genmap.png'
-      }]
-    }, {
-      name: 'Church Formation',
-      tools: [{
-        name: 'Four Fields GenMap',
-        image: 'assets/fourFields-genmap.png'
-      }, {
-        name: 'Church Circles GenMap',
-        image: 'assets/churchCircles-genmap.png'
-      }, {
-        name: 'Four Fields GenMap',
-        image: 'assets/fourFields-genmap.png'
-      }]
-    }, {
-      name: 'Discipleship',
-      tools: [{
-        name: 'Four Fields GenMap',
-        image: 'assets/fourFields-genmap.png'
-      }, {
-        name: 'Church Circles GenMap',
-        image: 'assets/churchCircles-genmap.png'
-      }, {
-        name: 'Four Fields GenMap',
-        image: 'assets/fourFields-genmap.png'
-      }]
-    }];
-  };
 });
 define('components/icon/icon',['exports', 'aurelia-framework'], function (exports, _aureliaFramework) {
     'use strict';
@@ -2275,7 +2191,91 @@ define('components/mapvarients/mapvarients',["exports"], function (exports) {
 define('components/signup/signup',[], function () {
   "use strict";
 });
-define('components/tool/tool',["exports"], function (exports) {
+define('views/category/category',["exports"], function (exports) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Category = exports.Category = function Category() {
+    _classCallCheck(this, Category);
+  };
+});
+define('views/home/home',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Home = exports.Home = function Home() {
+    _classCallCheck(this, Home);
+
+    this.categories = [{
+      name: 'Entry',
+      tools: [{
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }, {
+        name: 'Church Circles GenMap',
+        image: 'assets/churchCircles-genmap.png'
+      }, {
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }]
+    }, {
+      name: 'Gospel',
+      tools: [{
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }, {
+        name: 'Church Circles GenMap',
+        image: 'assets/churchCircles-genmap.png'
+      }, {
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }]
+    }, {
+      name: 'Church Formation',
+      tools: [{
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }, {
+        name: 'Church Circles GenMap',
+        image: 'assets/churchCircles-genmap.png'
+      }, {
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }]
+    }, {
+      name: 'Discipleship',
+      tools: [{
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }, {
+        name: 'Church Circles GenMap',
+        image: 'assets/churchCircles-genmap.png'
+      }, {
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }]
+    }];
+  };
+});
+define('views/tool/tool',["exports"], function (exports) {
   "use strict";
 
   Object.defineProperty(exports, "__esModule", {
@@ -2293,17 +2293,17 @@ define('components/tool/tool',["exports"], function (exports) {
   };
 });
 define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"./app.css\"></require><header></header><router-view class=\"${router.currentInstruction.config.name}\"></router-view></template>"; });
-define('text!app.css', ['module'], function(module) { module.exports = "@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 400;\n  src: url(\"assets/Interface-Regular.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Regular.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 400;\n  src: url(\"assets/Interface-RegularItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-RegularItalic.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 500;\n  src: url(\"assets/Interface-Medium.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Medium.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 500;\n  src: url(\"assets/Interface-MediumItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-MediumItalic.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 700;\n  src: url(\"assets/Interface-Bold.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Bold.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 700;\n  src: url(\"assets/Interface-BoldItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-BoldItalic.woff?v=1.1\") format(\"woff\"); }\n\n.contained {\n  max-width: 65rem;\n  margin: 0 auto; }\n\n.row {\n  display: flex;\n  flex-direction: row; }\n\n.col {\n  display: flex;\n  flex-direction: column; }\n\n.f1 {\n  flex: 1 0 auto; }\n\n.aic {\n  align-items: center; }\n\n.jcc {\n  justify-content: center; }\n\nicon {\n  height: 24px;\n  width: 24px;\n  display: inline-block;\n  margin: 12px; }\n\n.home {\n  display: flex;\n  align-items: center; }\n\n.container {\n  /*background: rgba(0,0,0,0.1);*/\n  flex-wrap: wrap;\n  padding-bottom: 4rem; }\n\n.category {\n  margin: 1rem;\n  flex: 1;\n  min-width: 26rem; }\n\n.category .heading {\n  border-bottom: 1px solid #DDD;\n  padding: 0.5rem;\n  align-items: flex-end; }\n\n.category .heading .name {\n  font-size: 2rem;\n  font-weight: bold;\n  color: #444;\n  font-family: Interface; }\n\n.category .heading .browse {\n  text-decoration: none;\n  font-size: 0.7rem;\n  color: #009EEB;\n  transition: opacity 100ms ease;\n  opacity: 0; }\n\n.category:hover .heading .browse {\n  opacity: 1; }\n\n.category .tools {\n  justify-content: space-around; }\n\n.category .tools .tool {\n  padding: 1rem;\n  margin-top: 0.5rem;\n  border: 2px solid #EEE;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: border 100ms ease; }\n\n.category .tools .tool:hover {\n  border: 2px solid #FF9E7C; }\n\n.category .tools .tool .image {\n  min-height: 7rem;\n  max-height: 7rem;\n  min-width: 7rem;\n  max-width: 7rem;\n  border: 1px solid #DDD;\n  background: #F5F5F5;\n  background-position: center;\n  background-size: cover; }\n\n.category .tools .tool .meta {\n  padding-top: 1rem;\n  text-align: center;\n  font-size: 0.9rem;\n  max-width: 7rem;\n  color: #333; }\n\n.category .tools .tool .meta .name {\n  font-family: Interface; }\n\n@media only screen and (max-width: 840px) {\n  .home {\n    align-items: flex-start; }\n  .container {\n    padding-bottom: 0; } }\n\nhtml, body {\n  min-height: 100vh;\n  min-width: 100vw;\n  max-height: 100vh;\n  max-width: 100vw;\n  position: relative;\n  font: 15px sans-serif;\n  margin: 0;\n  padding: 0; }\n\nbody {\n  display: flex;\n  flex-direction: column; }\n\nrouter-view {\n  flex: 1 0 auto; }\n"; });
-define('text!components/category/category.html', ['module'], function(module) { module.exports = "<template><h1>Category</h1></template>"; });
+define('text!app.css', ['module'], function(module) { module.exports = "@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 400;\n  src: url(\"assets/Interface-Regular.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Regular.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 400;\n  src: url(\"assets/Interface-RegularItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-RegularItalic.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 500;\n  src: url(\"assets/Interface-Medium.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Medium.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 500;\n  src: url(\"assets/Interface-MediumItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-MediumItalic.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 700;\n  src: url(\"assets/Interface-Bold.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Bold.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 700;\n  src: url(\"assets/Interface-BoldItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-BoldItalic.woff?v=1.1\") format(\"woff\"); }\n\n.contained, .home__categories {\n  max-width: 65rem;\n  margin: 0 auto; }\n\n.row, .home, .home__categories, .home-category__header, .home-category__tools {\n  display: flex;\n  flex-direction: row; }\n\n.col {\n  display: flex;\n  flex-direction: column; }\n\n.f1 {\n  flex: 1 0 auto; }\n\n.aic, .home {\n  align-items: center; }\n\n.jcc {\n  justify-content: center; }\n\nicon {\n  height: 24px;\n  width: 24px;\n  display: inline-block;\n  margin: 12px; }\n\n/*\n * Blocks:\n * .home\n * .home-category\n * .home-tool\n */\n.home__categories {\n  flex-wrap: wrap;\n  padding-bottom: 4rem; }\n\n.home-category {\n  margin: 1rem;\n  flex: 1;\n  min-width: 26rem; }\n  .home-category__header {\n    border-bottom: 1px solid #DDD;\n    padding: 0.5rem;\n    align-items: flex-end; }\n  .home-category__name {\n    font-size: 2rem;\n    font-weight: bold;\n    color: #444;\n    font-family: Interface; }\n  .home-category__browse {\n    margin-left: auto;\n    text-decoration: none;\n    font-size: 0.7rem;\n    color: #009EEB;\n    transition: opacity 100ms ease;\n    opacity: 0; }\n  .home-category:hover .home-category__browse {\n    opacity: 1; }\n  .home-category__tools {\n    justify-content: space-around; }\n\n.home-tool {\n  padding: 1rem;\n  margin-top: 0.5rem;\n  border: 2px solid #EEE;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: border 100ms ease;\n  text-decoration: none; }\n  .home-tool:hover {\n    border: 2px solid #FF9E7C; }\n  .home-tool__image {\n    min-height: 7rem;\n    max-height: 7rem;\n    min-width: 7rem;\n    max-width: 7rem;\n    border: 1px solid #DDD;\n    background: #F5F5F5;\n    background-position: center;\n    background-size: cover; }\n  .home-tool__meta {\n    padding-top: 1rem;\n    text-align: center;\n    font-size: 0.9rem;\n    max-width: 7rem;\n    color: #333; }\n  .home-tool__name {\n    font-family: Interface; }\n\n@media only screen and (max-width: 840px) {\n  .home {\n    align-items: flex-start; }\n    .home__categories {\n      padding-bottom: 0; } }\n\nhtml, body {\n  min-height: 100vh;\n  min-width: 100vw;\n  max-height: 100vh;\n  max-width: 100vw;\n  position: relative;\n  font: 15px sans-serif;\n  margin: 0;\n  padding: 0; }\n\nbody {\n  display: flex;\n  flex-direction: column; }\n\nrouter-view {\n  flex: 1 0 auto; }\n"; });
 define('text!components/documents/documents.html', ['module'], function(module) { module.exports = "<template><div class=\"document-list\"><table><thead><tr><th>Name</th><th><button click.delegate=\"createDocument()\">Add</button></th></tr></thead><tbody><tr repeat.for=\"doc of fileService.list\"><td><input type=\"text\" value.bind=\"doc.title\" placeholder=\"Doc Name\" change.delegate=\"saveDoc(doc)\"></td><td><button click.delegate=\"loadDoc(doc)\">Load</button> <button click.delegate=\"removeDocument(doc)\">Remove</button></td></tr></tbody></table></div></template>"; });
 define('text!components/editor/editor.html', ['module'], function(module) { module.exports = "<template><require from=\"./editor.css\"></require><div class=\"nav border-bottom-smoke\"><div class=\"left border-right-smoke col\"><div class=\"logo f1\">GenMapper</div></div><div class=\"right row\"><div class=\"meta f1\"><input class=\"title\" placeholder=\"Document Name\" value.bind=\"currentDoc.title\"></div><div class=\"actions row\"><button if.bind=\"loadedDoc\" disabled.bind=\"!isDirty\" click.trigger=\"save()\" class=\"button\">Save</button> <button if.bind=\"!loadedDoc\" disabled.bind=\"!canCreate\" click.trigger=\"create()\" class=\"button\">Create</button><div class=\"dropdown\"><icon name=\"down\"></icon></div></div></div></div><div class=\"main\"><div class=\"left sidebar col border-right-smoke\"><div class=\"actions row\"><div click.trigger=\"importFile()\" class=\"import border-right-snow f1\"><icon name=\"paperclip\"></icon></div><div click.trigger=\"startNew()\" class=\"create f1\"><icon name=\"add\"></icon></div></div><div if.bind=\"empty\" class=\"f1 emptyPlaceholder\"><div class=\"message\">You don't have any documents! Try importing or creating one using the buttons above</div></div><div if.bind=\"!empty\" class=\"f1 documents\"><div class=\"document row border-bottom-snow ${currentDoc.id === doc.id ? 'active' : ''}\" repeat.for=\"doc of docs\" click.trigger=\"setDoc(doc.id)\"><div class=\"meta f1 col\"><div class=\"title\">${doc.title}</div><div class=\"format\">${doc.format}</div></div><div class=\"actions\"><icon click.trigger=\"delete(doc.id, $event)\" class=\"delete\" name=\"delete\"></icon></div></div></div></div><div class=\"right content\"><textarea value.bind=\"currentDoc.content\" rows=\"20\" cols=\"80\"></textarea></div></div></template>"; });
 define('text!components/genmap/genmap.html', ['module'], function(module) { module.exports = "<template><require from=\"components/genmapper.css\"></require><aside><h3>${mapType}</h3><ul class=\"list\"><li><a href=\"#/genmapper/${mapType}/map\">Map</a></li><li><a href=\"#/genmapper/${mapType}/documents\">Documents</a></li><li><a href=\"#/genmapper/${mapType}/import\">Import</a></li><li><a href=\"\">Export</a></li></ul></aside><main style=\"transform:translateX(200px)\"><router-view containerless></router-view></main></template>"; });
-define('text!components/home/home.html', ['module'], function(module) { module.exports = "<template><div class=\"container contained row\"><div class=\"category\" repeat.for=\"category of categories\"><div class=\"heading row\"><div class=\"name f1\">${category.name}</div><a class=\"browse\" href=\"#/\">See All ▸</a></div><div class=\"tools row\"><div class=\"tool\" repeat.for=\"tool of category.tools\"><div class=\"image\" css=\"background-image: url('${tool.image}')\"></div><div class=\"meta\"><div class=\"name\">${tool.name}</div></div></div></div></div></div></template>"; });
 define('text!components/icon/icon.html', ['module'], function(module) { module.exports = "<template></template>"; });
 define('text!components/login/login.html', ['module'], function(module) { module.exports = "<template><form ref=\"form\"><input type=\"email\" name=\"email\" value.bind=\"email\" id=\"email\" placeholder=\"Email\"> <input type=\"password\" name=\"password\" value.bind=\"password\" id=\"password\" placeholder=\"Password\"> <button click.delegate=\"onSubmit($event)\">Login</button></form></template>"; });
 define('text!components/map/genmapper.html', ['module'], function(module) { module.exports = "<template><div id=\"content\"><aside style=\"display:none\" id=\"left-menu\"></aside><section id=\"intro\"><div id=\"intro-content\"><h2>GenMapper <span id=\"version\"></span> Help</h2><p>Hello, this app should serve for mapping generations of simple churches. I pray it serves you to advance Jesus' kingdom.</p><img src=\"scripts/assets/genmapper-node-example-church-circles.png\" style=\"float:right;margin:10px;margin-left:0\" alt=\"legend\"><h3>Legend</h3><p>Each circle represents a group / church. Dashed circle means group, full circle means church.<br>On the top the numbers describe: # total, # believers, # baptized<br>Inside the circle are the elements that are practiced in the group.<br>On the left there numbers 1 to 7 represent which elements of 3/3 process are practised:<br>1 - Personal care 2 - Worship 3 - Accountability 4 - Vision casting 5 - Bible study 6 - Practice 7 - Set goals and prayer</p><p>Click on the group to edit it.<br>Click on red button to remove group.<br>Click on green button to add child group.</p><h3>Import / Export</h3><p>Note: If you don't export, all changes will be lost when refreshing or closing page.<br>You can import a .xlsx or .xls (MS Excel) or .csv (Comma separated values) files.<br>You can also import a subtree by clicking a given group and then using the 'Import Subtree' button.<br>Export is currently available only to .csv format.<br><strong>Note:</strong> Some versions of Safari have problems with export to csv. If a new tab with blob is opened instead of file downloaded (see example below) <img src=\"scripts/assets/safari-export-issue-0.png\" style=\"margin:10px;margin-left:0\" alt=\"safari export issue\"><br>press Cmd + S, then enter a filename ending .csv, select Format: Page Source, and finally click Save. <img src=\"scripts/assets/safari-export-issue-1.png\" style=\"margin:10px;margin-left:0\" alt=\"safari export issue\"><br>For Export to PDF, use the Print buttons and then save as PDF in Chrome or Safari.</p><h3>Panning / Zooming</h3><p>You can pan by draging the map and zoom by mouse wheel or using buttons on the left.</p><h3>Changelog</h3><p>See <a href=\"https://github.com/dvopalecky/gen-mapper/blob/master/changelog.md\">here</a></p><h3>Credits</h3><p>Thanks to Curtis Sergeant for the idea of generational mapping and for providing useful feedback.<br>JavaScript libraries used: <a href=\"https://d3js.org\">d3.js</a>, <a href=\"https://github.com/eligrey/FileSaver.js/\">FileSaver.js</a>, <a href=\"https://github.com/SheetJS/js-xlsx\">js-xlsx</a> and <a href=\"http://underscorejs.org/\">Underscore.js</a><br><br>Copyright (c) 2016 - 2017 Daniel Vopalecky<br>Licensed with MIT Licence<br><a href=\"https://github.com/dvopalecky/gen-mapper\">Github repository</a><br>Please send suggestions and bugs to daniel.vopalecky@seznam.cz</p><button onclick=\"introSwitchVisibility()\">OK, let's start!</button></div></section><section id=\"alert-message\"></section><section id=\"edit-group\"></section><section id=\"main\"><svg id=\"main-svg\" width=\"100%\"></svg></section></div></template>"; });
 define('text!components/map/map.html', ['module'], function(module) { module.exports = "<template><header class=\"navbar\"><icon name=\"arrow-back\"></icon><input type=\"text\" value.bind=\"currentDocument.title\" placeholder=\"Document Name\"> <button click.delegate=\"save()\">Save</button></header><compose view-model.bind=\"genmapper\"></compose></template>"; });
 define('text!components/mapvarients/mapvarients.html', ['module'], function(module) { module.exports = "<template><require from=\"../genmapper.css\"></require><div style=\"text-align:center\"><h1>GenMapper</h1><p>Hello, this app should serve for mapping generations of simple churches.<br>I pray it serves you to advance Jesus' kingdom.</p><p>Please select gen map variant:</p><section style=\"max-width:900px;margin:0 auto;display:flex\"><div style=\"margin:20px;flex-grow:1;flex-shrink:1;padding:10px\"><a class=\"btn\" href=\"#/genmapper/four-fields\">Four Fields </a><img src=\"scripts/assets/gen-mapper-example1.png\" height=\"400\" alt=\"four-fields\"></div><div style=\"margin:20px;flex-grow:1;flex-shrink:1;padding:10px\"><a class=\"btn\" href=\"#/genmapper/church-circles\">Church Circles </a><img src=\"scripts/assets/gen-mapper-example-church-circles.png\" height=\"400\" alt=\"church-circles\"></div></section><h3>Other</h3><p><a href=\"church-circles-czech/index.html\">Church circles Czech</a></p><p><a href=\"movementeer/index.html\">MOVEMENTeer</a></p></div></template>"; });
 define('text!components/signup/signup.html', ['module'], function(module) { module.exports = ""; });
-define('text!components/tool/tool.html', ['module'], function(module) { module.exports = "<template><h1>Tool</h1></template>"; });
+define('text!views/category/category.html', ['module'], function(module) { module.exports = "<template><h1>Category</h1></template>"; });
+define('text!views/home/home.html', ['module'], function(module) { module.exports = "<template><div class=\"home__categories\"><div class=\"home-category\" repeat.for=\"category of categories\"><div class=\"home-category__header\"><div class=\"home-category__name\">${category.name}</div><a class=\"home-category__browse\" href=\"#/categories/${$index}\">See All ▸</a></div><div class=\"home-category__tools\"><a class=\"home-tool\" repeat.for=\"tool of category.tools\" href=\"#/tools/${$index}\"><div class=\"home-tool__image\" css=\"background-image: url('${tool.image}')\"></div><div class=\"home-tool__meta\"><div class=\"home-tool__name\">${tool.name}</div></div></a></div></div></div></template>"; });
+define('text!views/tool/tool.html', ['module'], function(module) { module.exports = "<template><h1>Tool</h1></template>"; });
 //# sourceMappingURL=app-bundle.js.map
