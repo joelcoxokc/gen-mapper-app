@@ -7,15 +7,15 @@ export class Home {
         tools: [
           {
             name: 'Four Fields GenMap',
-            image: 'scripts/assets/gen-mapper-example1.png'
+            image: 'assets/fourFields-genmap.png'
           },
           {
             name: 'Church Circles GenMap',
-            image: 'scripts/assets/gen-mapper-example-church-circles.png'
+            image: 'assets/churchCircles-genmap.png'
           },
           {
             name: 'Four Fields GenMap',
-            image: 'scripts/assets/gen-mapper-example1.png'
+            image: 'assets/fourFields-genmap.png'
           }
         ]
       },
@@ -24,15 +24,15 @@ export class Home {
         tools: [
           {
             name: 'Four Fields GenMap',
-            image: 'scripts/assets/gen-mapper-example1.png'
+            image: 'assets/fourFields-genmap.png'
           },
           {
             name: 'Church Circles GenMap',
-            image: 'scripts/assets/gen-mapper-example-church-circles.png'
+            image: 'assets/churchCircles-genmap.png'
           },
           {
             name: 'Four Fields GenMap',
-            image: 'scripts/assets/gen-mapper-example1.png'
+            image: 'assets/fourFields-genmap.png'
           }
         ]
       },
@@ -41,15 +41,15 @@ export class Home {
         tools: [
           {
             name: 'Four Fields GenMap',
-            image: 'scripts/assets/gen-mapper-example1.png'
+            image: 'assets/fourFields-genmap.png'
           },
           {
             name: 'Church Circles GenMap',
-            image: 'scripts/assets/gen-mapper-example-church-circles.png'
+            image: 'assets/churchCircles-genmap.png'
           },
           {
             name: 'Four Fields GenMap',
-            image: 'scripts/assets/gen-mapper-example1.png'
+            image: 'assets/fourFields-genmap.png'
           }
         ]
       },
@@ -58,15 +58,15 @@ export class Home {
         tools: [
           {
             name: 'Four Fields GenMap',
-            image: 'scripts/assets/gen-mapper-example1.png'
+            image: 'assets/fourFields-genmap.png'
           },
           {
             name: 'Church Circles GenMap',
-            image: 'scripts/assets/gen-mapper-example-church-circles.png'
+            image: 'assets/churchCircles-genmap.png'
           },
           {
             name: 'Four Fields GenMap',
-            image: 'scripts/assets/gen-mapper-example1.png'
+            image: 'assets/fourFields-genmap.png'
           }
         ]
       }

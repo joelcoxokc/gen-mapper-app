@@ -785,6 +785,73 @@ define('components/genmap/genmap',['exports'], function (exports) {
         return GenMapViewModel;
     }();
 });
+define('components/home/home',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Home = exports.Home = function Home() {
+    _classCallCheck(this, Home);
+
+    this.categories = [{
+      name: 'Entry',
+      tools: [{
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }, {
+        name: 'Church Circles GenMap',
+        image: 'assets/churchCircles-genmap.png'
+      }, {
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }]
+    }, {
+      name: 'Gospel',
+      tools: [{
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }, {
+        name: 'Church Circles GenMap',
+        image: 'assets/churchCircles-genmap.png'
+      }, {
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }]
+    }, {
+      name: 'Church Formation',
+      tools: [{
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }, {
+        name: 'Church Circles GenMap',
+        image: 'assets/churchCircles-genmap.png'
+      }, {
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }]
+    }, {
+      name: 'Discipleship',
+      tools: [{
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }, {
+        name: 'Church Circles GenMap',
+        image: 'assets/churchCircles-genmap.png'
+      }, {
+        name: 'Four Fields GenMap',
+        image: 'assets/fourFields-genmap.png'
+      }]
+    }];
+  };
+});
 define('components/icon/icon',['exports', 'aurelia-framework'], function (exports, _aureliaFramework) {
     'use strict';
 
@@ -854,7 +921,7 @@ define('components/icon/icon',['exports', 'aurelia-framework'], function (export
         }
 
         Icon.prototype.nameChanged = function nameChanged(name) {
-            this.element.setAttribute('style', 'background-image: url(scripts/icons/' + name + '.svg)');
+            this.element.setAttribute('style', 'background-image: url(assets/icons/' + name + '.svg)');
         };
 
         return Icon;
@@ -864,73 +931,6 @@ define('components/icon/icon',['exports', 'aurelia-framework'], function (export
             return null;
         }
     })), _class2)) || _class) || _class);
-});
-define('components/home/home',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Home = exports.Home = function Home() {
-    _classCallCheck(this, Home);
-
-    this.categories = [{
-      name: 'Entry',
-      tools: [{
-        name: 'Four Fields GenMap',
-        image: 'scripts/assets/gen-mapper-example1.png'
-      }, {
-        name: 'Church Circles GenMap',
-        image: 'scripts/assets/gen-mapper-example-church-circles.png'
-      }, {
-        name: 'Four Fields GenMap',
-        image: 'scripts/assets/gen-mapper-example1.png'
-      }]
-    }, {
-      name: 'Gospel',
-      tools: [{
-        name: 'Four Fields GenMap',
-        image: 'scripts/assets/gen-mapper-example1.png'
-      }, {
-        name: 'Church Circles GenMap',
-        image: 'scripts/assets/gen-mapper-example-church-circles.png'
-      }, {
-        name: 'Four Fields GenMap',
-        image: 'scripts/assets/gen-mapper-example1.png'
-      }]
-    }, {
-      name: 'Church Formation',
-      tools: [{
-        name: 'Four Fields GenMap',
-        image: 'scripts/assets/gen-mapper-example1.png'
-      }, {
-        name: 'Church Circles GenMap',
-        image: 'scripts/assets/gen-mapper-example-church-circles.png'
-      }, {
-        name: 'Four Fields GenMap',
-        image: 'scripts/assets/gen-mapper-example1.png'
-      }]
-    }, {
-      name: 'Discipleship',
-      tools: [{
-        name: 'Four Fields GenMap',
-        image: 'scripts/assets/gen-mapper-example1.png'
-      }, {
-        name: 'Church Circles GenMap',
-        image: 'scripts/assets/gen-mapper-example-church-circles.png'
-      }, {
-        name: 'Four Fields GenMap',
-        image: 'scripts/assets/gen-mapper-example1.png'
-      }]
-    }];
-  };
 });
 define('components/login/login',['exports', 'services/authservice', 'aurelia-router', 'aurelia-framework'], function (exports, _authservice, _aureliaRouter, _aureliaFramework) {
     'use strict';
@@ -2293,7 +2293,7 @@ define('components/tool/tool',["exports"], function (exports) {
   };
 });
 define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"./app.css\"></require><header></header><router-view class=\"${router.currentInstruction.config.name}\"></router-view></template>"; });
-define('text!app.css', ['module'], function(module) { module.exports = "@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 400;\n  src: url(\"scripts/assets/Interface-Regular.woff2?v=1.1\") format(\"woff2\"), url(\"scripts/assets/Interface-Regular.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 400;\n  src: url(\"scripts/assets/Interface-RegularItalic.woff2?v=1.1\") format(\"woff2\"), url(\"scripts/assets/Interface-RegularItalic.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 500;\n  src: url(\"scripts/assets/Interface-Medium.woff2?v=1.1\") format(\"woff2\"), url(\"scripts/assets/Interface-Medium.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 500;\n  src: url(\"scripts/assets/Interface-MediumItalic.woff2?v=1.1\") format(\"woff2\"), url(\"scripts/assets/Interface-MediumItalic.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 700;\n  src: url(\"scripts/assets/Interface-Bold.woff2?v=1.1\") format(\"woff2\"), url(\"scripts/assets/Interface-Bold.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 700;\n  src: url(\"scripts/assets/Interface-BoldItalic.woff2?v=1.1\") format(\"woff2\"), url(\"scripts/assets/Interface-BoldItalic.woff?v=1.1\") format(\"woff\"); }\n\n.contained {\n  max-width: 65rem;\n  margin: 0 auto; }\n\n.row {\n  display: flex;\n  flex-direction: row; }\n\n.col {\n  display: flex;\n  flex-direction: column; }\n\n.f1 {\n  flex: 1 0 auto; }\n\n.aic {\n  align-items: center; }\n\n.jcc {\n  justify-content: center; }\n\n.home {\n  display: flex;\n  align-items: center; }\n\n.container {\n  /*background: rgba(0,0,0,0.1);*/\n  flex-wrap: wrap;\n  padding-bottom: 4rem; }\n\n.category {\n  margin: 1rem;\n  flex: 1;\n  min-width: 26rem; }\n\n.category .heading {\n  border-bottom: 1px solid #DDD;\n  padding: 0.5rem;\n  align-items: flex-end; }\n\n.category .heading .name {\n  font-size: 2rem;\n  font-weight: bold;\n  color: #444;\n  font-family: Interface; }\n\n.category .heading .browse {\n  text-decoration: none;\n  font-size: 0.7rem;\n  color: #009EEB;\n  transition: opacity 100ms ease;\n  opacity: 0; }\n\n.category:hover .heading .browse {\n  opacity: 1; }\n\n.category .tools {\n  justify-content: space-around; }\n\n.category .tools .tool {\n  padding: 1rem;\n  margin-top: 0.5rem;\n  border: 2px solid #EEE;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: border 100ms ease; }\n\n.category .tools .tool:hover {\n  border: 2px solid #FF9E7C; }\n\n.category .tools .tool .image {\n  min-height: 7rem;\n  max-height: 7rem;\n  min-width: 7rem;\n  max-width: 7rem;\n  border: 1px solid #DDD;\n  background: #F5F5F5;\n  background-position: center;\n  background-size: cover; }\n\n.category .tools .tool .meta {\n  padding-top: 1rem;\n  text-align: center;\n  font-size: 0.9rem;\n  max-width: 7rem;\n  color: #333; }\n\n.category .tools .tool .meta .name {\n  font-family: Interface; }\n\n@media only screen and (max-width: 840px) {\n  .home {\n    align-items: flex-start; }\n  .container {\n    padding-bottom: 0; } }\n\nhtml, body {\n  min-height: 100vh;\n  min-width: 100vw;\n  max-height: 100vh;\n  max-width: 100vw;\n  position: relative;\n  font: 15px sans-serif;\n  margin: 0;\n  padding: 0; }\n\nbody {\n  display: flex;\n  flex-direction: column; }\n\nrouter-view {\n  flex: 1 0 auto; }\n"; });
+define('text!app.css', ['module'], function(module) { module.exports = "@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 400;\n  src: url(\"assets/Interface-Regular.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Regular.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 400;\n  src: url(\"assets/Interface-RegularItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-RegularItalic.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 500;\n  src: url(\"assets/Interface-Medium.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Medium.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 500;\n  src: url(\"assets/Interface-MediumItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-MediumItalic.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 700;\n  src: url(\"assets/Interface-Bold.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Bold.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 700;\n  src: url(\"assets/Interface-BoldItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-BoldItalic.woff?v=1.1\") format(\"woff\"); }\n\n.contained {\n  max-width: 65rem;\n  margin: 0 auto; }\n\n.row {\n  display: flex;\n  flex-direction: row; }\n\n.col {\n  display: flex;\n  flex-direction: column; }\n\n.f1 {\n  flex: 1 0 auto; }\n\n.aic {\n  align-items: center; }\n\n.jcc {\n  justify-content: center; }\n\nicon {\n  height: 24px;\n  width: 24px;\n  display: inline-block;\n  margin: 12px; }\n\n.home {\n  display: flex;\n  align-items: center; }\n\n.container {\n  /*background: rgba(0,0,0,0.1);*/\n  flex-wrap: wrap;\n  padding-bottom: 4rem; }\n\n.category {\n  margin: 1rem;\n  flex: 1;\n  min-width: 26rem; }\n\n.category .heading {\n  border-bottom: 1px solid #DDD;\n  padding: 0.5rem;\n  align-items: flex-end; }\n\n.category .heading .name {\n  font-size: 2rem;\n  font-weight: bold;\n  color: #444;\n  font-family: Interface; }\n\n.category .heading .browse {\n  text-decoration: none;\n  font-size: 0.7rem;\n  color: #009EEB;\n  transition: opacity 100ms ease;\n  opacity: 0; }\n\n.category:hover .heading .browse {\n  opacity: 1; }\n\n.category .tools {\n  justify-content: space-around; }\n\n.category .tools .tool {\n  padding: 1rem;\n  margin-top: 0.5rem;\n  border: 2px solid #EEE;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: border 100ms ease; }\n\n.category .tools .tool:hover {\n  border: 2px solid #FF9E7C; }\n\n.category .tools .tool .image {\n  min-height: 7rem;\n  max-height: 7rem;\n  min-width: 7rem;\n  max-width: 7rem;\n  border: 1px solid #DDD;\n  background: #F5F5F5;\n  background-position: center;\n  background-size: cover; }\n\n.category .tools .tool .meta {\n  padding-top: 1rem;\n  text-align: center;\n  font-size: 0.9rem;\n  max-width: 7rem;\n  color: #333; }\n\n.category .tools .tool .meta .name {\n  font-family: Interface; }\n\n@media only screen and (max-width: 840px) {\n  .home {\n    align-items: flex-start; }\n  .container {\n    padding-bottom: 0; } }\n\nhtml, body {\n  min-height: 100vh;\n  min-width: 100vw;\n  max-height: 100vh;\n  max-width: 100vw;\n  position: relative;\n  font: 15px sans-serif;\n  margin: 0;\n  padding: 0; }\n\nbody {\n  display: flex;\n  flex-direction: column; }\n\nrouter-view {\n  flex: 1 0 auto; }\n"; });
 define('text!components/category/category.html', ['module'], function(module) { module.exports = "<template><h1>Category</h1></template>"; });
 define('text!components/documents/documents.html', ['module'], function(module) { module.exports = "<template><div class=\"document-list\"><table><thead><tr><th>Name</th><th><button click.delegate=\"createDocument()\">Add</button></th></tr></thead><tbody><tr repeat.for=\"doc of fileService.list\"><td><input type=\"text\" value.bind=\"doc.title\" placeholder=\"Doc Name\" change.delegate=\"saveDoc(doc)\"></td><td><button click.delegate=\"loadDoc(doc)\">Load</button> <button click.delegate=\"removeDocument(doc)\">Remove</button></td></tr></tbody></table></div></template>"; });
 define('text!components/editor/editor.html', ['module'], function(module) { module.exports = "<template><require from=\"./editor.css\"></require><div class=\"nav border-bottom-smoke\"><div class=\"left border-right-smoke col\"><div class=\"logo f1\">GenMapper</div></div><div class=\"right row\"><div class=\"meta f1\"><input class=\"title\" placeholder=\"Document Name\" value.bind=\"currentDoc.title\"></div><div class=\"actions row\"><button if.bind=\"loadedDoc\" disabled.bind=\"!isDirty\" click.trigger=\"save()\" class=\"button\">Save</button> <button if.bind=\"!loadedDoc\" disabled.bind=\"!canCreate\" click.trigger=\"create()\" class=\"button\">Create</button><div class=\"dropdown\"><icon name=\"down\"></icon></div></div></div></div><div class=\"main\"><div class=\"left sidebar col border-right-smoke\"><div class=\"actions row\"><div click.trigger=\"importFile()\" class=\"import border-right-snow f1\"><icon name=\"paperclip\"></icon></div><div click.trigger=\"startNew()\" class=\"create f1\"><icon name=\"add\"></icon></div></div><div if.bind=\"empty\" class=\"f1 emptyPlaceholder\"><div class=\"message\">You don't have any documents! Try importing or creating one using the buttons above</div></div><div if.bind=\"!empty\" class=\"f1 documents\"><div class=\"document row border-bottom-snow ${currentDoc.id === doc.id ? 'active' : ''}\" repeat.for=\"doc of docs\" click.trigger=\"setDoc(doc.id)\"><div class=\"meta f1 col\"><div class=\"title\">${doc.title}</div><div class=\"format\">${doc.format}</div></div><div class=\"actions\"><icon click.trigger=\"delete(doc.id, $event)\" class=\"delete\" name=\"delete\"></icon></div></div></div></div><div class=\"right content\"><textarea value.bind=\"currentDoc.content\" rows=\"20\" cols=\"80\"></textarea></div></div></template>"; });
