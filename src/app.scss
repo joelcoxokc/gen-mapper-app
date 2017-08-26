@@ -1,8 +1,10 @@
 @import 'components/components.scss';
+@import 'components/colors.scss';
 @import 'components/fonts.scss';
 @import 'components/flex.scss';
 @import 'components/icon/icon.scss';
 @import 'views/home/home.scss';
+@import 'views/tool/tool.scss';
 
 html, body {
   min-height: 100vh;
@@ -13,6 +15,7 @@ html, body {
   font: 15px sans-serif;
   margin: 0;
   padding: 0;
+  user-select: none;
 }
 
 body {

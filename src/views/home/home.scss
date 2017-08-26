@@ -42,7 +42,7 @@
     margin-left: auto;
     text-decoration: none;
     font-size: 0.7rem;
-    color: #009EEB;
+    color: $dark-blue;
     transition: opacity 100ms ease;
     opacity: 0;
   }
@@ -67,7 +67,7 @@
   text-decoration: none;
 
   &:hover {
-    border: 2px solid #FF9E7C;
+    border: 2px solid $light-orange;
   }
 
   &__image {

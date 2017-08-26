@@ -1,0 +1,102 @@
+/*
+ * Blocks:
+ * .tool
+ * .tool-sidebar
+ * .tool-main
+ * .tool-main-nav
+ * .tool-main-view
+ */
+
+$sidebar-width: 20rem;
+$navbar-height: 4rem;
+
+.tool {
+  @extend .row;
+}
+
+.tool-sidebar {
+  width: $sidebar-width;
+  border-right: 1px solid $smoke;
+
+  &__nav {
+    @extend .row;
+    @extend .aic;
+    @extend .jcc;
+
+    height: $navbar-height;
+    border-bottom: 1px solid $smoke;
+  }
+
+  &__logo {
+    font-family: Interface, sans-serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: #FF5216;
+  }
+}
+
+.tool-documents {
+
+}
+
+.tool-main {
+  @extend .f1;
+}
+
+.button {
+  background: $green;
+  color: white;
+  cursor: pointer;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  border: none;
+  font-size: 0.9rem;
+  box-shadow: inset 0 -3px 0 rgba(31,45,61,.15);
+  outline: none;
+  transition: box-shadow 100ms ease;
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.tool-nav {
+  @extend .row;
+  @extend .aic;
+  border-bottom: 1px solid $smoke;
+  height: $navbar-height;
+  padding: 0 1rem;
+
+  &__title {
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    border: 2px dashed $smoke;
+    outline: none;
+    text-overflow: ellipsis;
+    transition: all 100ms ease;
+
+    &::placeholder {
+      color: $dark-smoke;
+    }
+
+    &:hover {
+      border: 2px dashed $light-blue;
+    }
+
+    &:focus {
+      border: 2px solid $light-blue;
+    }
+  }
+
+  &__actions {
+    margin-left: auto;
+  }
+
+  &__save, &__create {
+    @extend .button;
+  }
+}
+
+.tool-view {
+
+}
