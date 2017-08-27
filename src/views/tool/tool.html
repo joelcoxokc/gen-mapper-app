@@ -1,22 +1,22 @@
 <template>
-  <div class="tool-sidebar">
+  <div class="tool-sidebar" if.bind="canPersist">
     <div class="tool-sidebar__nav">
       <div class="tool-sidebar__logo"> GenMapper </div>
     </div>
     <div class="tool-documents">
-      Documents
+
     </div>
   </div>
   <div class="tool-main">
-    <div class="tool-nav">
-      <input class="tool-nav__title" placeholder="Document Name">
+    <div class="tool-nav" if.bind="canPersist">
+      <input class="tool-nav__title" placeholder="Document Name" value.bind="title">
       <div class="tool-nav__actions">
-        <button class="tool-nav__save">Save</button>
-        <button class="tool-nav__create">Create</button>
+        <button class="tool-nav__save" disabled.bind="!dirty" click.trigger="save()">Save</button>
       </div>
     </div>
     <div class="tool-view">
-      View
+      <require from="components/texteditor/texteditor"></require>
+      <texteditor dirty.bind="editorDirty" content.bind="content"></texteditor>
     </div>
   </div>
 </template>

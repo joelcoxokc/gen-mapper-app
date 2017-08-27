@@ -435,85 +435,6 @@ define('shared/entity',["exports"], function (exports) {
         _classCallCheck(this, Entity);
     };
 });
-define('components/documents/documents',['exports', 'services/fileservice', 'aurelia-framework', 'aurelia-router', 'services/http'], function (exports, _fileservice, _aureliaFramework, _aureliaRouter, _http) {
-    'use strict';
-
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    exports.DocumentsViewModel = undefined;
-
-    var _dec, _class2;
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
-
-    var formats_types = {
-        'church-circles': 'churchCircles',
-        'four-fields': 'fourFields'
-    };
-
-    var Document = function Document() {
-        var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-        _classCallCheck(this, Document);
-
-        this.entityType = 'documents';
-        this.title = 'New Document';
-        this.content = 'id,parentId,name,email,link,attenders,believers,baptized,newlyBaptized,church,churchType,elementBaptism,elementWord,elementPrayer,elementLordsSupper,elementGive,elementLove,elementWorship,elementLeaders,elementMakeDisciples,place,date,threeThirds,active\n    0,,Leader\'s Name,,,0,0,0,0,0,newBelievers,0,0,0,0,0,0,0,0,0,Place,Date,1234567,1';
-        Object.assign(this, obj);
-    };
-
-    var DocumentsViewModel = exports.DocumentsViewModel = (_dec = (0, _aureliaFramework.inject)(_aureliaRouter.Router, _http.Http, _fileservice.FileService), _dec(_class2 = function () {
-        function DocumentsViewModel(router, http, fileService) {
-            _classCallCheck(this, DocumentsViewModel);
-
-            this.router = router;
-            this.http = http;
-            this.fileService = fileService;
-        }
-
-        DocumentsViewModel.prototype.activate = function activate(params) {
-            this.formatId = params.type;
-            this.formatId = formats_types[this.formatId];
-            var d = new Document();
-            this.fileService.all();
-        };
-
-        DocumentsViewModel.prototype.saveDoc = function saveDoc(doc) {
-            this.fileService.update(doc);
-        };
-
-        DocumentsViewModel.prototype.loadDoc = function loadDoc(doc) {
-            this.fileService.select(doc);
-            this.router.navigate(doc.title);
-        };
-
-        DocumentsViewModel.prototype.createDocument = function createDocument() {
-            var _this = this;
-
-            var doc = new Document();
-            doc.format = this.formatId;
-
-            this.fileService.create(doc).then(function () {
-                return _this.fileService.all();
-            });
-        };
-
-        DocumentsViewModel.prototype.removeDocument = function removeDocument(doc) {
-            var _this2 = this;
-
-            this.fileService.delete(doc).then(function () {
-                return _this2.fileService.all();
-            });
-        };
-
-        return DocumentsViewModel;
-    }()) || _class2);
-});
 define('components/editor/editor',['exports', 'aurelia-framework', 'services/Documents'], function (exports, _aureliaFramework, _Documents) {
   'use strict';
 
@@ -720,12 +641,15 @@ define('components/editor/editor',['exports', 'aurelia-framework', 'services/Doc
     return Editor;
   }()) || _class3);
 });
-define('components/genmap/genmap',['exports'], function (exports) {
+define('components/documents/documents',['exports', 'services/fileservice', 'aurelia-framework', 'aurelia-router', 'services/http'], function (exports, _fileservice, _aureliaFramework, _aureliaRouter, _http) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
         value: true
     });
+    exports.DocumentsViewModel = undefined;
+
+    var _dec, _class2;
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -733,40 +657,68 @@ define('components/genmap/genmap',['exports'], function (exports) {
         }
     }
 
-    var GenMapViewModel = exports.GenMapViewModel = function () {
-        function GenMapViewModel() {
-            _classCallCheck(this, GenMapViewModel);
+    var formats_types = {
+        'church-circles': 'churchCircles',
+        'four-fields': 'fourFields'
+    };
 
-            this.showDocumentList = false;
-        }
+    var Document = function Document() {
+        var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-        GenMapViewModel.prototype.activate = function activate(params) {
-            this.mapType = params.type;
-        };
+        _classCallCheck(this, Document);
 
-        GenMapViewModel.prototype.configureRouter = function configureRouter(config, router) {
-            config.map([{
-                moduleId: 'components/documents/documents',
-                route: ['', 'documents'],
-                name: 'documents',
-                auth: true
-            }, {
-                moduleId: 'components/import/import',
-                route: ['import'],
-                name: 'import',
-                auth: true
-            }, {
-                moduleId: 'components/map/map',
-                route: [':id'],
-                name: 'map',
-                auth: true
-            }]);
+        this.entityType = 'documents';
+        this.title = 'New Document';
+        this.content = 'id,parentId,name,email,link,attenders,believers,baptized,newlyBaptized,church,churchType,elementBaptism,elementWord,elementPrayer,elementLordsSupper,elementGive,elementLove,elementWorship,elementLeaders,elementMakeDisciples,place,date,threeThirds,active\n    0,,Leader\'s Name,,,0,0,0,0,0,newBelievers,0,0,0,0,0,0,0,0,0,Place,Date,1234567,1';
+        Object.assign(this, obj);
+    };
+
+    var DocumentsViewModel = exports.DocumentsViewModel = (_dec = (0, _aureliaFramework.inject)(_aureliaRouter.Router, _http.Http, _fileservice.FileService), _dec(_class2 = function () {
+        function DocumentsViewModel(router, http, fileService) {
+            _classCallCheck(this, DocumentsViewModel);
 
             this.router = router;
+            this.http = http;
+            this.fileService = fileService;
+        }
+
+        DocumentsViewModel.prototype.activate = function activate(params) {
+            this.formatId = params.type;
+            this.formatId = formats_types[this.formatId];
+            var d = new Document();
+            this.fileService.all();
         };
 
-        return GenMapViewModel;
-    }();
+        DocumentsViewModel.prototype.saveDoc = function saveDoc(doc) {
+            this.fileService.update(doc);
+        };
+
+        DocumentsViewModel.prototype.loadDoc = function loadDoc(doc) {
+            this.fileService.select(doc);
+            this.router.navigate(doc.title);
+        };
+
+        DocumentsViewModel.prototype.createDocument = function createDocument() {
+            var _this = this;
+
+            var doc = new Document();
+            doc.format = this.formatId;
+
+            this.fileService.create(doc).then(function () {
+                return _this.fileService.all();
+            });
+        };
+
+        DocumentsViewModel.prototype.removeDocument = function removeDocument(doc) {
+            var _this2 = this;
+
+            this.fileService.delete(doc).then(function () {
+                return _this2.fileService.all();
+            });
+        };
+
+        return DocumentsViewModel;
+    }()) || _class2);
 });
 define('components/icon/icon',['exports', 'aurelia-framework'], function (exports, _aureliaFramework) {
     'use strict';
@@ -848,6 +800,54 @@ define('components/icon/icon',['exports', 'aurelia-framework'], function (export
         }
     })), _class2)) || _class) || _class);
 });
+define('components/genmap/genmap',['exports'], function (exports) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var GenMapViewModel = exports.GenMapViewModel = function () {
+        function GenMapViewModel() {
+            _classCallCheck(this, GenMapViewModel);
+
+            this.showDocumentList = false;
+        }
+
+        GenMapViewModel.prototype.activate = function activate(params) {
+            this.mapType = params.type;
+        };
+
+        GenMapViewModel.prototype.configureRouter = function configureRouter(config, router) {
+            config.map([{
+                moduleId: 'components/documents/documents',
+                route: ['', 'documents'],
+                name: 'documents',
+                auth: true
+            }, {
+                moduleId: 'components/import/import',
+                route: ['import'],
+                name: 'import',
+                auth: true
+            }, {
+                moduleId: 'components/map/map',
+                route: [':id'],
+                name: 'map',
+                auth: true
+            }]);
+
+            this.router = router;
+        };
+
+        return GenMapViewModel;
+    }();
+});
 define('components/login/login',['exports', 'services/authservice', 'aurelia-router', 'aurelia-framework'], function (exports, _authservice, _aureliaRouter, _aureliaFramework) {
     'use strict';
 
@@ -895,6 +895,147 @@ define('components/login/login',['exports', 'services/authservice', 'aurelia-rou
 
         return Login;
     }()) || _class);
+});
+define('components/mapvarients/mapvarients',["exports"], function (exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+            throw new TypeError("Cannot call a class as a function");
+        }
+    }
+
+    var MapVarientsViewModel = exports.MapVarientsViewModel = function MapVarientsViewModel() {
+        _classCallCheck(this, MapVarientsViewModel);
+    };
+});
+define('components/signup/signup',[], function () {
+  "use strict";
+});
+define('components/texteditor/texteditor',['exports', 'aurelia-framework'], function (exports, _aureliaFramework) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.TextEditor = undefined;
+
+  function _initDefineProp(target, property, descriptor, context) {
+    if (!descriptor) return;
+    Object.defineProperty(target, property, {
+      enumerable: descriptor.enumerable,
+      configurable: descriptor.configurable,
+      writable: descriptor.writable,
+      value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+    });
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  }();
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+    var desc = {};
+    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+      desc[key] = descriptor[key];
+    });
+    desc.enumerable = !!desc.enumerable;
+    desc.configurable = !!desc.configurable;
+
+    if ('value' in desc || desc.initializer) {
+      desc.writable = true;
+    }
+
+    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+      return decorator(target, property, desc) || desc;
+    }, desc);
+
+    if (context && desc.initializer !== void 0) {
+      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+      desc.initializer = undefined;
+    }
+
+    if (desc.initializer === void 0) {
+      Object['define' + 'Property'](target, property, desc);
+      desc = null;
+    }
+
+    return desc;
+  }
+
+  function _initializerWarningHelper(descriptor, context) {
+    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+  }
+
+  var _dec, _dec2, _dec3, _dec4, _class, _desc, _value, _class2, _descriptor, _descriptor2;
+
+  var TextEditor = exports.TextEditor = (_dec = (0, _aureliaFramework.customElement)('texteditor'), _dec2 = (0, _aureliaFramework.inject)(Element), _dec3 = (0, _aureliaFramework.bindable)({ defaultBindingMode: _aureliaFramework.bindingMode.twoWay }), _dec4 = (0, _aureliaFramework.bindable)({ defaultBindingMode: _aureliaFramework.bindingMode.twoWay }), _dec(_class = _dec2(_class = (_class2 = function () {
+    function TextEditor(element) {
+      _classCallCheck(this, TextEditor);
+
+      _initDefineProp(this, 'dirty', _descriptor, this);
+
+      this.loaded = '';
+
+      _initDefineProp(this, '_content', _descriptor2, this);
+
+      this.element = element;
+    }
+
+    TextEditor.prototype._contentChanged = function _contentChanged() {
+      this.dirty = this.loaded !== this._content;
+    };
+
+    _createClass(TextEditor, [{
+      key: 'content',
+      get: function get() {
+        console.log('get');
+        this.loaded = this._content;
+        return this._content;
+      },
+      set: function set(content) {
+        console.log('set', content);
+        this.loaded = content;
+        this._content = content;
+      }
+    }]);
+
+    return TextEditor;
+  }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'dirty', [_dec3], {
+    enumerable: true,
+    initializer: function initializer() {
+      return false;
+    }
+  }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, '_content', [_aureliaFramework.observable], {
+    enumerable: true,
+    initializer: function initializer() {
+      return '';
+    }
+  }), _applyDecoratedDescriptor(_class2.prototype, 'content', [_dec4], Object.getOwnPropertyDescriptor(_class2.prototype, 'content'), _class2.prototype)), _class2)) || _class) || _class);
 });
 define('components/map/genmapper',['exports', './templates', 'aurelia-framework'], function (exports, _templates, _aureliaFramework) {
     'use strict';
@@ -2171,26 +2312,6 @@ define('components/map/templates',['exports'], function (exports) {
   exports.textHeight = textHeight;
   exports.textMargin = textMargin;
 });
-define('components/signup/signup',[], function () {
-  "use strict";
-});
-define('components/mapvarients/mapvarients',["exports"], function (exports) {
-    "use strict";
-
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-
-    function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-        }
-    }
-
-    var MapVarientsViewModel = exports.MapVarientsViewModel = function MapVarientsViewModel() {
-        _classCallCheck(this, MapVarientsViewModel);
-    };
-});
 define('views/category/category',["exports"], function (exports) {
   "use strict";
 
@@ -2275,12 +2396,23 @@ define('views/home/home',['exports'], function (exports) {
     }];
   };
 });
-define('views/tool/tool',["exports"], function (exports) {
-  "use strict";
+define('views/tool/tool',['exports', 'aurelia-framework'], function (exports, _aureliaFramework) {
+  'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  exports.Tool = undefined;
+
+  function _initDefineProp(target, property, descriptor, context) {
+    if (!descriptor) return;
+    Object.defineProperty(target, property, {
+      enumerable: descriptor.enumerable,
+      configurable: descriptor.configurable,
+      writable: descriptor.writable,
+      value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+    });
+  }
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -2288,13 +2420,99 @@ define('views/tool/tool',["exports"], function (exports) {
     }
   }
 
-  var Tool = exports.Tool = function Tool() {
-    _classCallCheck(this, Tool);
-  };
+  var _createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  }();
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+    var desc = {};
+    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+      desc[key] = descriptor[key];
+    });
+    desc.enumerable = !!desc.enumerable;
+    desc.configurable = !!desc.configurable;
+
+    if ('value' in desc || desc.initializer) {
+      desc.writable = true;
+    }
+
+    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+      return decorator(target, property, desc) || desc;
+    }, desc);
+
+    if (context && desc.initializer !== void 0) {
+      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+      desc.initializer = undefined;
+    }
+
+    if (desc.initializer === void 0) {
+      Object['define' + 'Property'](target, property, desc);
+      desc = null;
+    }
+
+    return desc;
+  }
+
+  function _initializerWarningHelper(descriptor, context) {
+    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+  }
+
+  var _desc, _value, _class, _descriptor;
+
+  var Tool = exports.Tool = (_class = function () {
+    function Tool() {
+      _classCallCheck(this, Tool);
+
+      this.canPersist = true;
+
+      _initDefineProp(this, 'title', _descriptor, this);
+
+      this.loaded = '';
+      this.editorDirty = false;
+      this.titleDirty = false;
+      this.content = '';
+    }
+
+    Tool.prototype.titleChanged = function titleChanged() {
+      this.titleDirty = this.loaded !== this.title;
+    };
+
+    Tool.prototype.save = function save() {};
+
+    Tool.prototype.load = function load() {};
+
+    _createClass(Tool, [{
+      key: 'dirty',
+      get: function get() {
+        return this.editorDirty || this.titleDirty;
+      }
+    }]);
+
+    return Tool;
+  }(), (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'title', [_aureliaFramework.observable], {
+    enumerable: true,
+    initializer: function initializer() {
+      return '';
+    }
+  })), _class);
 });
 define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"./app.css\"></require><header></header><router-view class=\"${router.currentInstruction.config.name}\"></router-view></template>"; });
 define('text!components/documents/documents.html', ['module'], function(module) { module.exports = "<template><div class=\"document-list\"><table><thead><tr><th>Name</th><th><button click.delegate=\"createDocument()\">Add</button></th></tr></thead><tbody><tr repeat.for=\"doc of fileService.list\"><td><input type=\"text\" value.bind=\"doc.title\" placeholder=\"Doc Name\" change.delegate=\"saveDoc(doc)\"></td><td><button click.delegate=\"loadDoc(doc)\">Load</button> <button click.delegate=\"removeDocument(doc)\">Remove</button></td></tr></tbody></table></div></template>"; });
-define('text!app.css', ['module'], function(module) { module.exports = "@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 400;\n  src: url(\"assets/Interface-Regular.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Regular.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 400;\n  src: url(\"assets/Interface-RegularItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-RegularItalic.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 500;\n  src: url(\"assets/Interface-Medium.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Medium.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 500;\n  src: url(\"assets/Interface-MediumItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-MediumItalic.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 700;\n  src: url(\"assets/Interface-Bold.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Bold.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 700;\n  src: url(\"assets/Interface-BoldItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-BoldItalic.woff?v=1.1\") format(\"woff\"); }\n\n.contained, .home__categories {\n  max-width: 65rem;\n  margin: 0 auto; }\n\n.row, .home, .home__categories, .home-category__header, .home-category__tools, .tool, .tool-sidebar__nav, .tool-nav {\n  display: flex;\n  flex-direction: row; }\n\n.col {\n  display: flex;\n  flex-direction: column; }\n\n.f1, .tool-main {\n  flex: 1 0 auto; }\n\n.aic, .home, .tool-sidebar__nav, .tool-nav {\n  align-items: center; }\n\n.jcc, .tool-sidebar__nav {\n  justify-content: center; }\n\nicon {\n  height: 24px;\n  width: 24px;\n  display: inline-block;\n  margin: 12px; }\n\n/*\n * Blocks:\n * .home\n * .home-category\n * .home-tool\n */\n.home__categories {\n  flex-wrap: wrap;\n  padding-bottom: 4rem; }\n\n.home-category {\n  margin: 1rem;\n  flex: 1;\n  min-width: 26rem; }\n  .home-category__header {\n    border-bottom: 1px solid #DDD;\n    padding: 0.5rem;\n    align-items: flex-end; }\n  .home-category__name {\n    font-size: 2rem;\n    font-weight: bold;\n    color: #444;\n    font-family: Interface; }\n  .home-category__browse {\n    margin-left: auto;\n    text-decoration: none;\n    font-size: 0.7rem;\n    color: #009EEB;\n    transition: opacity 100ms ease;\n    opacity: 0; }\n  .home-category:hover .home-category__browse {\n    opacity: 1; }\n  .home-category__tools {\n    justify-content: space-around; }\n\n.home-tool {\n  padding: 1rem;\n  margin-top: 0.5rem;\n  border: 2px solid #EEE;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: border 100ms ease;\n  text-decoration: none; }\n  .home-tool:hover {\n    border: 2px solid #FF9E7C; }\n  .home-tool__image {\n    min-height: 7rem;\n    max-height: 7rem;\n    min-width: 7rem;\n    max-width: 7rem;\n    border: 1px solid #DDD;\n    background: #F5F5F5;\n    background-position: center;\n    background-size: cover; }\n  .home-tool__meta {\n    padding-top: 1rem;\n    text-align: center;\n    font-size: 0.9rem;\n    max-width: 7rem;\n    color: #333; }\n  .home-tool__name {\n    font-family: Interface; }\n\n@media only screen and (max-width: 840px) {\n  .home {\n    align-items: flex-start; }\n    .home__categories {\n      padding-bottom: 0; } }\n\n/*\n * Blocks:\n * .tool\n * .tool-sidebar\n * .tool-main\n * .tool-main-nav\n * .tool-main-view\n */\n.tool-sidebar {\n  width: 20rem;\n  border-right: 1px solid #E0E6ED; }\n  .tool-sidebar__nav {\n    height: 4rem;\n    border-bottom: 1px solid #E0E6ED; }\n  .tool-sidebar__logo {\n    font-family: Interface, sans-serif;\n    font-weight: 600;\n    font-size: 1.4rem;\n    color: #FF5216; }\n\n.button, .tool-nav__save, .tool-nav__create {\n  background: #13CE66;\n  color: white;\n  cursor: pointer;\n  padding: 0.8rem 1.5rem;\n  border-radius: 4px;\n  border: none;\n  font-size: 0.9rem;\n  box-shadow: inset 0 -3px 0 rgba(31, 45, 61, 0.15);\n  outline: none;\n  transition: box-shadow 100ms ease; }\n  .button:hover, .tool-nav__save:hover, .tool-nav__create:hover {\n    box-shadow: none; }\n\n.tool-nav {\n  border-bottom: 1px solid #E0E6ED;\n  height: 4rem;\n  padding: 0 1rem; }\n  .tool-nav__title {\n    padding: 0.5rem;\n    font-size: 1.1rem;\n    border: 2px dashed #E0E6ED;\n    outline: none;\n    text-overflow: ellipsis;\n    transition: all 100ms ease; }\n    .tool-nav__title::placeholder {\n      color: #D3DCE6; }\n    .tool-nav__title:hover {\n      border: 2px dashed #85D7FF; }\n    .tool-nav__title:focus {\n      border: 2px solid #85D7FF; }\n  .tool-nav__actions {\n    margin-left: auto; }\n\nhtml, body {\n  min-height: 100vh;\n  min-width: 100vw;\n  max-height: 100vh;\n  max-width: 100vw;\n  position: relative;\n  font: 15px sans-serif;\n  margin: 0;\n  padding: 0;\n  user-select: none; }\n\nbody {\n  display: flex;\n  flex-direction: column; }\n\nrouter-view {\n  flex: 1 0 auto; }\n"; });
+define('text!app.css', ['module'], function(module) { module.exports = "@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 400;\n  src: url(\"assets/Interface-Regular.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Regular.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 400;\n  src: url(\"assets/Interface-RegularItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-RegularItalic.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 500;\n  src: url(\"assets/Interface-Medium.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Medium.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 500;\n  src: url(\"assets/Interface-MediumItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-MediumItalic.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: normal;\n  font-weight: 700;\n  src: url(\"assets/Interface-Bold.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-Bold.woff?v=1.1\") format(\"woff\"); }\n\n@font-face {\n  font-family: 'Interface';\n  font-style: italic;\n  font-weight: 700;\n  src: url(\"assets/Interface-BoldItalic.woff2?v=1.1\") format(\"woff2\"), url(\"assets/Interface-BoldItalic.woff?v=1.1\") format(\"woff\"); }\n\n.contained, .home__categories {\n  max-width: 65rem;\n  margin: 0 auto; }\n\n.row, .home, .home__categories, .home-category__header, .home-category__tools, .tool, .tool-sidebar__nav, .tool-nav {\n  display: flex;\n  flex-direction: row; }\n\n.col, .tool-main {\n  display: flex;\n  flex-direction: column; }\n\n.f1, .home-category, .tool-main, .tool-view {\n  flex: 1 0 auto; }\n\n.aic, .home, .tool-sidebar__nav, .tool-nav {\n  align-items: center; }\n\n.jcc, .tool-sidebar__nav {\n  justify-content: center; }\n\nicon {\n  height: 24px;\n  width: 24px;\n  display: inline-block;\n  margin: 12px; }\n\n/*\n * Blocks:\n * .home\n * .home-category\n * .home-tool\n */\n.home__categories {\n  flex-wrap: wrap;\n  padding-bottom: 4rem; }\n\n.home-category {\n  margin: 1rem;\n  min-width: 26rem; }\n  .home-category__header {\n    border-bottom: 1px solid #DDD;\n    padding: 0.5rem;\n    align-items: flex-end; }\n  .home-category__name {\n    font-size: 2rem;\n    font-weight: bold;\n    color: #444;\n    font-family: Interface; }\n  .home-category__browse {\n    margin-left: auto;\n    text-decoration: none;\n    font-size: 0.7rem;\n    color: #009EEB;\n    transition: opacity 100ms ease;\n    opacity: 0; }\n  .home-category:hover .home-category__browse {\n    opacity: 1; }\n  .home-category__tools {\n    justify-content: space-around; }\n\n.home-tool {\n  padding: 1rem;\n  margin-top: 0.5rem;\n  border: 2px solid #EEE;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: border 100ms ease;\n  text-decoration: none; }\n  .home-tool:hover {\n    border: 2px solid #FF9E7C; }\n  .home-tool__image {\n    min-height: 7rem;\n    max-height: 7rem;\n    min-width: 7rem;\n    max-width: 7rem;\n    border: 1px solid #DDD;\n    background: #F5F5F5;\n    background-position: center;\n    background-size: cover; }\n  .home-tool__meta {\n    padding-top: 1rem;\n    text-align: center;\n    font-size: 0.9rem;\n    max-width: 7rem;\n    color: #333; }\n  .home-tool__name {\n    font-family: Interface; }\n\n@media only screen and (max-width: 840px) {\n  .home {\n    align-items: flex-start; }\n    .home__categories {\n      padding-bottom: 0; }\n  .home-category {\n    margin: 1rem 0; }\n    .home-category__browse {\n      opacity: 1; } }\n\n@media only screen and (max-width: 500px) {\n  .home-tool__image {\n    min-height: 5rem;\n    max-height: 5rem;\n    min-width: 5rem;\n    max-width: 5rem; }\n  .home-tool__meta {\n    max-width: 5rem; } }\n\n/*\n * Blocks:\n * .tool\n * .tool-sidebar\n * .tool-main\n * .tool-main-nav\n * .tool-main-view\n */\n.tool-sidebar {\n  width: 20rem;\n  border-right: 1px solid #E0E6ED; }\n  .tool-sidebar__nav {\n    height: 4rem;\n    border-bottom: 1px solid #E0E6ED; }\n  .tool-sidebar__logo {\n    font-family: Interface, sans-serif;\n    font-weight: 600;\n    font-size: 1.4rem;\n    color: #FF5216; }\n\n.button, .tool-nav__save {\n  background: #13CE66;\n  color: white;\n  cursor: pointer;\n  padding: 0.8rem 1.5rem;\n  border-radius: 4px;\n  border: none;\n  font-size: 0.9rem;\n  box-shadow: inset 0 -3px 0 rgba(31, 45, 61, 0.15);\n  outline: none;\n  transition: box-shadow 100ms ease; }\n  .button:hover, .tool-nav__save:hover, .button:focus, .tool-nav__save:focus {\n    box-shadow: none; }\n  .button:disabled, .tool-nav__save:disabled {\n    background: #E5E9F2;\n    color: #555;\n    cursor: not-allowed; }\n    .button:disabled:hover, .tool-nav__save:disabled:hover {\n      box-shadow: inset 0 -3px 0 rgba(31, 45, 61, 0.15); }\n\n.tool-nav {\n  border-bottom: 1px solid #E0E6ED;\n  height: 4rem;\n  padding: 0 1rem; }\n  .tool-nav__title {\n    padding: 0.5rem;\n    font-size: 1.1rem;\n    border: 2px dashed #E0E6ED;\n    outline: none;\n    text-overflow: ellipsis;\n    transition: all 100ms ease; }\n    .tool-nav__title::placeholder {\n      color: #D3DCE6; }\n    .tool-nav__title:hover {\n      border: 2px solid #E0E6ED; }\n    .tool-nav__title:focus {\n      border: 2px solid #85D7FF; }\n  .tool-nav__actions {\n    margin-left: auto; }\n\nhtml, body {\n  min-height: 100vh;\n  min-width: 100vw;\n  max-height: 100vh;\n  max-width: 100vw;\n  position: relative;\n  font: 15px sans-serif;\n  margin: 0;\n  padding: 0;\n  user-select: none; }\n\nbody {\n  display: flex;\n  flex-direction: column; }\n\nrouter-view {\n  flex: 1 0 auto; }\n"; });
 define('text!components/editor/editor.html', ['module'], function(module) { module.exports = "<template><require from=\"./editor.css\"></require><div class=\"nav border-bottom-smoke\"><div class=\"left border-right-smoke col\"><div class=\"logo f1\">GenMapper</div></div><div class=\"right row\"><div class=\"meta f1\"><input class=\"title\" placeholder=\"Document Name\" value.bind=\"currentDoc.title\"></div><div class=\"actions row\"><button if.bind=\"loadedDoc\" disabled.bind=\"!isDirty\" click.trigger=\"save()\" class=\"button\">Save</button> <button if.bind=\"!loadedDoc\" disabled.bind=\"!canCreate\" click.trigger=\"create()\" class=\"button\">Create</button><div class=\"dropdown\"><icon name=\"down\"></icon></div></div></div></div><div class=\"main\"><div class=\"left sidebar col border-right-smoke\"><div class=\"actions row\"><div click.trigger=\"importFile()\" class=\"import border-right-snow f1\"><icon name=\"paperclip\"></icon></div><div click.trigger=\"startNew()\" class=\"create f1\"><icon name=\"add\"></icon></div></div><div if.bind=\"empty\" class=\"f1 emptyPlaceholder\"><div class=\"message\">You don't have any documents! Try importing or creating one using the buttons above</div></div><div if.bind=\"!empty\" class=\"f1 documents\"><div class=\"document row border-bottom-snow ${currentDoc.id === doc.id ? 'active' : ''}\" repeat.for=\"doc of docs\" click.trigger=\"setDoc(doc.id)\"><div class=\"meta f1 col\"><div class=\"title\">${doc.title}</div><div class=\"format\">${doc.format}</div></div><div class=\"actions\"><icon click.trigger=\"delete(doc.id, $event)\" class=\"delete\" name=\"delete\"></icon></div></div></div></div><div class=\"right content\"><textarea value.bind=\"currentDoc.content\" rows=\"20\" cols=\"80\"></textarea></div></div></template>"; });
 define('text!components/genmap/genmap.html', ['module'], function(module) { module.exports = "<template><require from=\"components/genmapper.css\"></require><aside><h3>${mapType}</h3><ul class=\"list\"><li><a href=\"#/genmapper/${mapType}/map\">Map</a></li><li><a href=\"#/genmapper/${mapType}/documents\">Documents</a></li><li><a href=\"#/genmapper/${mapType}/import\">Import</a></li><li><a href=\"\">Export</a></li></ul></aside><main style=\"transform:translateX(200px)\"><router-view containerless></router-view></main></template>"; });
 define('text!components/icon/icon.html', ['module'], function(module) { module.exports = "<template></template>"; });
@@ -2303,7 +2521,8 @@ define('text!components/map/genmapper.html', ['module'], function(module) { modu
 define('text!components/map/map.html', ['module'], function(module) { module.exports = "<template><header class=\"navbar\"><icon name=\"arrow-back\"></icon><input type=\"text\" value.bind=\"currentDocument.title\" placeholder=\"Document Name\"> <button click.delegate=\"save()\">Save</button></header><compose view-model.bind=\"genmapper\"></compose></template>"; });
 define('text!components/mapvarients/mapvarients.html', ['module'], function(module) { module.exports = "<template><require from=\"../genmapper.css\"></require><div style=\"text-align:center\"><h1>GenMapper</h1><p>Hello, this app should serve for mapping generations of simple churches.<br>I pray it serves you to advance Jesus' kingdom.</p><p>Please select gen map variant:</p><section style=\"max-width:900px;margin:0 auto;display:flex\"><div style=\"margin:20px;flex-grow:1;flex-shrink:1;padding:10px\"><a class=\"btn\" href=\"#/genmapper/four-fields\">Four Fields </a><img src=\"scripts/assets/gen-mapper-example1.png\" height=\"400\" alt=\"four-fields\"></div><div style=\"margin:20px;flex-grow:1;flex-shrink:1;padding:10px\"><a class=\"btn\" href=\"#/genmapper/church-circles\">Church Circles </a><img src=\"scripts/assets/gen-mapper-example-church-circles.png\" height=\"400\" alt=\"church-circles\"></div></section><h3>Other</h3><p><a href=\"church-circles-czech/index.html\">Church circles Czech</a></p><p><a href=\"movementeer/index.html\">MOVEMENTeer</a></p></div></template>"; });
 define('text!components/signup/signup.html', ['module'], function(module) { module.exports = ""; });
+define('text!components/texteditor/texteditor.html', ['module'], function(module) { module.exports = "<template><textarea value.bind=\"_content\" rows=\"40\" cols=\"80\"></textarea> ${dirty} </template>"; });
 define('text!views/category/category.html', ['module'], function(module) { module.exports = "<template><h1>Category</h1></template>"; });
 define('text!views/home/home.html', ['module'], function(module) { module.exports = "<template><div class=\"home__categories\"><div class=\"home-category\" repeat.for=\"category of categories\"><div class=\"home-category__header\"><div class=\"home-category__name\">${category.name}</div><a class=\"home-category__browse\" href=\"#/categories/${$index}\">See All ▸</a></div><div class=\"home-category__tools\"><a class=\"home-tool\" repeat.for=\"tool of category.tools\" href=\"#/tools/${$index}\"><div class=\"home-tool__image\" css=\"background-image: url('${tool.image}')\"></div><div class=\"home-tool__meta\"><div class=\"home-tool__name\">${tool.name}</div></div></a></div></div></div></template>"; });
-define('text!views/tool/tool.html', ['module'], function(module) { module.exports = "<template><div class=\"tool-sidebar\"><div class=\"tool-sidebar__nav\"><div class=\"tool-sidebar__logo\">GenMapper</div></div><div class=\"tool-documents\">Documents</div></div><div class=\"tool-main\"><div class=\"tool-nav\"><input class=\"tool-nav__title\" placeholder=\"Document Name\"><div class=\"tool-nav__actions\"><button class=\"tool-nav__save\">Save</button> <button class=\"tool-nav__create\">Create</button></div></div><div class=\"tool-view\">View</div></div></template>"; });
+define('text!views/tool/tool.html', ['module'], function(module) { module.exports = "<template><div class=\"tool-sidebar\" if.bind=\"canPersist\"><div class=\"tool-sidebar__nav\"><div class=\"tool-sidebar__logo\">GenMapper</div></div><div class=\"tool-documents\"></div></div><div class=\"tool-main\"><div class=\"tool-nav\" if.bind=\"canPersist\"><input class=\"tool-nav__title\" placeholder=\"Document Name\" value.bind=\"title\"><div class=\"tool-nav__actions\"><button class=\"tool-nav__save\" disabled.bind=\"!dirty\" click.trigger=\"save()\">Save</button></div></div><div class=\"tool-view\"><require from=\"components/texteditor/texteditor\"></require><texteditor dirty.bind=\"editorDirty\" content.bind=\"content\"></texteditor></div></div></template>"; });
 //# sourceMappingURL=app-bundle.js.map

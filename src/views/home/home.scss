@@ -19,8 +19,8 @@
 }
 
 .home-category {
+  @extend .f1;
   margin: 1rem;
-  flex: 1;
   min-width: 26rem;
 
   &__header {
@@ -58,6 +58,8 @@
 }
 
 .home-tool {
+  $content-width: 7rem;
+
   padding: 1rem;
   margin-top: 0.5rem;
   border: 2px solid #EEE;
@@ -71,10 +73,10 @@
   }
 
   &__image {
-    min-height: 7rem;
-    max-height: 7rem;
-    min-width: 7rem;
-    max-width: 7rem;
+    min-height: $content-width;
+    max-height: $content-width;
+    min-width: $content-width;
+    max-width: $content-width;
     border: 1px solid #DDD;
     background: #F5F5F5;
     background-position: center;
@@ -85,7 +87,7 @@
     padding-top: 1rem;
     text-align: center;
     font-size: 0.9rem;
-    max-width: 7rem;
+    max-width: $content-width;
     color: #333;
   }
 
@@ -100,6 +102,31 @@
 
     &__categories {
       padding-bottom: 0;
+    }
+  }
+
+  .home-category {
+    margin: 1rem 0;
+
+    &__browse {
+      opacity: 1;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .home-tool {
+    $content-width: 5rem;
+
+    &__image {
+      min-height: $content-width;
+      max-height: $content-width;
+      min-width: $content-width;
+      max-width: $content-width;
+    }
+
+    &__meta {
+      max-width: $content-width;
     }
   }
 }
