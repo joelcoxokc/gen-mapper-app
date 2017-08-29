@@ -3,20 +3,32 @@
     <div class="tool-sidebar__nav">
       <div class="tool-sidebar__logo"> GenMapper </div>
     </div>
+    <div class="tool-sidebar__actions">
+      <button class="tool-sidebar__action"><icon name="paperclip"></icon></button>
+      <button class="tool-sidebar__action"><icon name="add"></icon></button>
+    </div>
     <div class="tool-documents">
-
+      <div class="tool-documents__document ${documents._current.id === doc.id ? 'tool-documents__document--active' : ''}" repeat.for="doc of documents.docs" click.trigger="documents.changeCurrent(doc)">
+        <div class="tool-documents__meta">
+          <div class="tool-documents__title">${doc.title}</div>
+          <div class="tool-documents__description">Description</div>
+        </div>
+        <div class="tool-documents__actions">
+          <icon click.trigger="" class="tool-documents__icon" name="delete"></icon>
+        </div>
+      </div>
     </div>
   </div>
   <div class="tool-main">
     <div class="tool-nav" if.bind="canPersist">
-      <input class="tool-nav__title" placeholder="Document Name" value.bind="title">
+      <input class="tool-nav__title" placeholder="Document Name" value.bind="documents.current.title">
       <div class="tool-nav__actions">
-        <button class="tool-nav__save" disabled.bind="!dirty" click.trigger="save()">Save</button>
+        <button class="tool-nav__save" disabled.bind="!documents.current.dirty" click.trigger="documents.saveCurrent()">Save</button>
       </div>
     </div>
     <div class="tool-view">
       <require from="components/texteditor/texteditor"></require>
-      <texteditor dirty.bind="editorDirty" content.bind="content"></texteditor>
+      <texteditor></texteditor>
     </div>
   </div>
 </template>

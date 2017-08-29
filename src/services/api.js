@@ -1,13 +1,12 @@
 import { HttpClient } from 'aurelia-http-client';
 import { inject } from 'aurelia-framework';
-import { Entity } from 'shared/entity';
 
 function handleError(err) {
   console.log(err.content.message);
 }
 
 @inject(HttpClient)
-export class Http {
+export class Api {
   constructor(http: HttpClient) {
     this.http = http;
     this.configure();
@@ -46,42 +45,5 @@ export class Http {
       .delete(url)
       .then(response => response.content.data)
       .catch(handleError);
-  }
-
-  getAll(url: string) {
-    return this.http
-    .get(url)
-    .then(d => d.content)
-    .catch(handleError);
-  }
-
-  getDocuments(format) {
-    return this.getAll('documents')
-    .then(d => {
-      return d.data.map(item => {
-        item.entityType = 'documents';
-        return item;
-      });
-    });
-  }
-
-  create(entity: Entity = null) {
-    return this.http
-    .post(entity.entityType, entity)
-    .catch(handleError);
-  }
-
-  update(entity: Entity = null) {
-    const url = `${entity.entityType}/${entity.id}`;
-    return this.http
-    .put(url, entity)
-    .catch(handleError);
-  }
-
-  deleteEntity(entity: Entity = null) {
-    const url = `${entity.entityType}/${entity.id}`;
-    return this.http
-    .delete(url)
-    .catch(handleError);
   }
 }

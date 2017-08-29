@@ -4,7 +4,7 @@ import {inject} from 'aurelia-framework';
 
 @inject(AuthService, Router)
 export class Login {
-    
+
     email = null;
     password = null;
 
@@ -20,7 +20,7 @@ export class Login {
 
     login() {
 
-        const email = this.email; 
+        const email = this.email;
         const password = this.password;
         let user = {email, password};
         this.auth.login(user)

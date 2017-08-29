@@ -1,26 +1,11 @@
-import { observable } from 'aurelia-framework';
+import { inject } from 'aurelia-framework';
+import { Documents } from 'services/documents';
 
+@inject(Documents)
 export class Tool {
   canPersist = true;
-  @observable title = '';
-  loaded = '';
-  editorDirty = false;
-  titleDirty = false;
-  content = '';
 
-  titleChanged() {
-    this.titleDirty = (this.loaded !== this.title);
-  }
-
-  get dirty() {
-    return this.editorDirty || this.titleDirty;
-  }
-
-  save() {
-
-  }
-
-  load() {
-
+  constructor(documents) {
+    this.documents = documents;
   }
 }

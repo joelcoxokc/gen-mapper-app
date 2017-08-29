@@ -58,6 +58,7 @@
 }
 
 .home-tool {
+  @extend .col;
   $content-width: 7rem;
 
   padding: 1rem;
@@ -84,6 +85,9 @@
   }
 
   &__meta {
+    @extend .f1;
+    @extend .col;
+    @extend .jcc;
     padding-top: 1rem;
     text-align: center;
     font-size: 0.9rem;

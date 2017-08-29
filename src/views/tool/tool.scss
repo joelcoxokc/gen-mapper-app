@@ -2,9 +2,10 @@
  * Blocks:
  * .tool
  * .tool-sidebar
+ * .tool-documents
  * .tool-main
- * .tool-main-nav
- * .tool-main-view
+ * .tool-nav
+ * .tool-view
  */
 
 $sidebar-width: 20rem;
@@ -15,6 +16,7 @@ $navbar-height: 4rem;
 }
 
 .tool-sidebar {
+  @extend .col;
   width: $sidebar-width;
   border-right: 1px solid $smoke;
 
@@ -31,12 +33,69 @@ $navbar-height: 4rem;
     font-family: Interface, sans-serif;
     font-weight: 600;
     font-size: 1.4rem;
-    color: #FF5216;
+    color: $dark-orange;
+  }
+
+  &__actions {
+    background: $dark-snow;
+  }
+
+  &__action {
+    @extend .row;
+    @extend .jcc;
+    border-bottom: 1px solid $smoke;
   }
 }
 
 .tool-documents {
+  @extend .f1;
+  background: $snow;
 
+  &__document {
+    @extend .row;
+    background: white;
+    border-bottom: 1px solid $dark-snow;
+    padding: 1rem;
+    cursor: pointer;
+  }
+
+  &__meta {
+    @extend .f1;
+    @extend .col;
+    @extend .jcc;
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    color: $steel;
+  }
+
+  &__description {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: $silver;
+  }
+
+  &__icon {
+    margin: 6px;
+    padding: 6px;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 100ms ease;
+  }
+
+  &__document--active &__title {
+    color: $blue;
+  }
+
+  &__document:hover &__icon {
+    opacity: 0.6;
+  }
+
+  &__document:hover &__icon:hover {
+    opacity: 1;
+  }
 }
 
 .tool-main {
