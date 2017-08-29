@@ -5,16 +5,19 @@
     </div>
     <div class="tool-sidebar__actions">
       <button class="tool-sidebar__action"><icon name="paperclip"></icon></button>
-      <button class="tool-sidebar__action"><icon name="add"></icon></button>
+      <button click.trigger="documents.create()" class="tool-sidebar__action"><icon name="add"></icon></button>
+    </div>
+    <div class="tool-sidebar__placeholder" if.bind="documents.empty">
+      <span> You don't have any documents! Try importing or creating one using the buttons above </span>
     </div>
     <div class="tool-documents">
       <div class="tool-documents__document ${documents._current.id === doc.id ? 'tool-documents__document--active' : ''}" repeat.for="doc of documents.docs" click.trigger="documents.changeCurrent(doc)">
         <div class="tool-documents__meta">
           <div class="tool-documents__title">${doc.title}</div>
-          <div class="tool-documents__description">Description</div>
+          <div class="tool-documents__description">${doc.content}</div>
         </div>
         <div class="tool-documents__actions">
-          <icon click.trigger="" class="tool-documents__icon" name="delete"></icon>
+          <icon click.trigger="documents.delete(doc, $event)" class="tool-documents__icon" name="delete"></icon>
         </div>
       </div>
     </div>

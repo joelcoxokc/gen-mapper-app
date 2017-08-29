@@ -1,5 +1,5 @@
 import { inject, observable } from 'aurelia-framework';
-import { Documents } from 'services/Documents';
+import { Documents } from 'services/documents';
 
 class Document {
   @observable title;
